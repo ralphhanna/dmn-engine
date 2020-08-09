@@ -1,4 +1,4 @@
-import { Logger } from '..';
+import { Logger } from './common';
 import { Expression, ExpressionNode, Condition } from './ExpressionNode'
 import { RulesDelegate } from './RulesDelegate';
 
