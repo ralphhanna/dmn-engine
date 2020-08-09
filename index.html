@@ -1,0 +1,170 @@
+<script src="bundle.js"></script>
+
+<form>
+    <br />Expression:    <input type="text" id="expr" />
+    <br />Input Value:   <input type="text" id="value" />
+    <br />Input expected:   <input type="text" id="expected" />
+    <br />Input Result:   <input type="text" id="result" />
+
+    <br />Input Value:   <input type="button"
+                                class='input_submit'
+                                name="submit "
+                                style="margin-right: 15px;"
+                                onClick="execute()" />
+    <div id="message"></div>
+
+
+</form>
+<div id="treeDisplay">
+Tree:
+</div>
+<style>
+    /* Remove default bullets */
+    ul, #myUL {
+        list-style-type: none;
+    }
+
+    /* Remove margins and padding from the parent ul */
+    #myUL {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Style the caret/arrow */
+    .caret {
+        cursor: pointer;
+        user-select: none; /* Prevent text selection */
+    }
+
+        /* Create the caret/arrow with a unicode, and style it */
+        .caret::before {
+            content: "\25B6";
+            color: black;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+    /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+    .caret-down::before {
+        transform: rotate(90deg);
+    }
+
+    /* Hide the nested list */
+    .nested {
+        display: none; 
+    }
+
+    /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+    .active {
+        display: block;
+    }
+</style>
+<script>
+    function toggleTree() {
+        var toggler = document.getElementsByClassName("caret");
+        var i;
+
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener("click", function () {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret-down");
+            });
+        }
+
+    }
+
+    function execute() {
+        
+        const expr = document.getElementById("expr");
+        const res = document.getElementById("result");
+        let ret = testExpr(expr.value, document.getElementById("value").value, document.getElementById("expected").value);
+        res.value = ret.result;
+    }
+
+    function testExpr(expr, value, res) {
+
+        let msg = '';
+        const engine = new ExprEngine.ExpressionEngine();
+        const ret = engine.evaluate(expr);
+        displayExpressionTree(ret.expression);
+
+        return;
+        displayExpression(ret.expression.rootNode);
+
+        tree.forEach(line => {
+                html+=line;
+        });
+        treeHtml.innerHTML='<b><table>'+ html+'</table></b>';
+        
+        if (ret !== res) {
+            msg = "***Error -" + expr + " for " + value + "result: " + ret + "expecting:" + res;
+            console.log(msg);
+
+        }
+        document.getElementById("message").innerHTML = msg;
+
+        return ret;
+    }
+    function testCond(expr, value, res,) {
+        let msg = '';
+        const engine = new ExprEngine.ExpressionEngine();
+        const ret = engine.evaluateCondition(expr, value);
+        if (ret !== res) {
+            msg = "***Error -" + expr + " for " + value + "result: " + ret + "expecting:" + res;
+            console.log(msg);
+
+        }
+        document.getElementById("message").innerHTML = msg;
+
+        return ret;
+    }
+    var tree = [];
+    function displayExpression(expr, level = 0) {
+
+        expr.loop(function (expr, level) {
+            let msg = '';
+            let res = (expr.result ? `result=<${expr.result}>   ` : '');
+            msg = level + '-'.repeat(level + 1) + ">" + expr.type;
+            msg += "</td><td> #" + expr.id;
+            msg += "</td><td> " + expr.value;
+            msg += "</td><td> " +res;
+            tree.push('<tr><td>'+msg+'</td></tr>');
+            console.log(msg);
+        }, level);
+    }
+    function displayTree(expr, level = 0) {
+
+        let msg = '';
+        let res = (expr.result ? `result=<${expr.result}>   ` : '');
+        msg = level + '-'.repeat(level + 1) + ">" + expr.type;
+        msg += " #" + expr.id;
+        msg += " " + expr.value;
+        msg += " " + res;
+
+        if (expr.children.length > 0) {
+            tree.push('<li><span class="caret">' + msg + '</span>');
+            tree.push('<ul class="nested">');
+            expr.children.forEach(child => {
+                displayTree(child, level + 1);
+            });
+            tree.push('</ul></li>');
+        }
+        else
+            tree.push('<li>' + msg + '</li>');
+
+
+    }
+    function displayExpressionTree(expr) {
+        tree = [];
+        displayTree(expr.rootNode);
+        const treeHtml = document.getElementById('treeDisplay');
+        let html = '';
+        tree.forEach(line => {
+            html += line;
+        });
+        treeHtml.innerHTML = '<ul id="myUL">' + html + '</ul>';
+        toggleTree();
+
+    }
+
+</script>

@@ -1,0 +1,987 @@
+[
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   text                              "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "\"text\"'",
+    "mask": "#aaaa##",
+    "newMask": "#aaaa##"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   \"text\"                            "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "'\"text\"'",
+    "mask": "#aaaa##",
+    "newMask": "##aaaa##",
+    "maskDiff": " X   X X"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   text                              "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "\"text\"",
+    "mask": "#aaaa#",
+    "newMask": "#aaaa#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   te'xt                             "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "\"te'xt\"",
+    "mask": "#aa#aa#",
+    "newMask": "#aa#aa#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   te\"xt                             "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "'te\"xt'",
+    "mask": "#aa#aa#",
+    "newMask": "#aa#aa#"
+  },
+  {
+    "tree": [
+      "0->True              #0                                     "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "-",
+    "mask": "#",
+    "newMask": "#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Bracket          #1   (                                 ",
+      "2--->Binary          #8   and                               ",
+      "3---->Call           #2   in                                ",
+      "4----->Bracket       #3   (                                 ",
+      "5------>Call         #4   abc                               ",
+      "6------->Operator    #5   ,                                 ",
+      "5------>Literal      #6   xyz-abc                           ",
+      "3---->Literal        #9   2                                 ",
+      "2--->Operator        #10  >                                 ",
+      "3---->Literal        #11  1                                 "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "(in (abc,'xyz-abc') and 2 > 1 )",
+    "mask": "#aa #aaa##aaa#aaa## aaa N # N #",
+    "newMask": "#aa #aaa##aaa#aaa## aaa N # N #"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   abc                               ",
+      "1-->Operator         #2   ,                                 ",
+      "1-->Text             #3   true                              "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "'abc', true   ",
+    "mask": "#aaa## aaaa   ",
+    "newMask": "#aaa## aaaa   "
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Binary           #1   not                               ",
+      "2--->Literal         #2   3                                 "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "not 3",
+    "mask": "aaa N",
+    "newMask": "aaa N"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Bracket          #1   (                                 ",
+      "2--->Binary          #8   and                               ",
+      "3---->Call           #2   in                                ",
+      "4----->Bracket       #3   (                                 ",
+      "5------>Call         #4   abc                               ",
+      "6------->Operator    #5   ,                                 ",
+      "5------>Literal      #6   xyz-abc                           ",
+      "3---->Operator       #9   >                                 ",
+      "4----->Literal       #10  1                                 "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "(in (abc,'xyz-abc') and  > 1 )",
+    "mask": "#aa #aaa##aaa#aaa## aaa  # N #",
+    "newMask": "#aa #aaa##aaa#aaa## aaa  # N #"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<600>   ",
+      "1-->Operator         #8   *                                 result=<600>   ",
+      "2--->Bracket         #1   (                                 result=<6>   ",
+      "3---->Operator       #3   +                                 result=<6>   ",
+      "4----->Literal       #2   4                                 ",
+      "4----->Operator      #5   -                                 result=<2>   ",
+      "5------>Literal      #4   3                                 ",
+      "5------>Literal      #6   1                                 ",
+      "2--->Operator        #10  ^                                 result=<100>   ",
+      "3---->Literal        #9   10                                ",
+      "3---->Literal        #11  2                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "600"
+    ],
+    "errors": [],
+    "type": "Expression",
+    "comments": [],
+    "expr": "(4 + 3 - 1) * 10 ^2",
+    "mask": "#N # N # N# # NN #N",
+    "newMask": "#N # N # N# # NN #N"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Operator         #2   +                                 ",
+      "2--->Literal         #1   4                                 ",
+      "2--->Operator        #4   -                                 ",
+      "3---->Literal        #3   3                                 ",
+      "3---->Operator       #6   *                                 ",
+      "4----->Literal       #5   1                                 ",
+      "4----->Operator      #8   ^                                 ",
+      "5------>Literal      #7   10                                ",
+      "5------>Literal      #9   2                                 "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Expression",
+    "comments": [],
+    "expr": "4 + 3 - 1 * 10 ^2",
+    "mask": "N # N # N # NN #N",
+    "newMask": "N # N # N # NN #N"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   qouted string with $ / \\ _ +      "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Expression",
+    "comments": [],
+    "expr": "'qouted string with $ / \\ _ +'",
+    "mask": "#aaaaaa aaaaaa aaaa # # # a ##",
+    "newMask": "#aaaaaa aaaaaa aaaa # # # a ##"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<8>   ",
+      "1-->Operator         #2   +                                 result=<8>   ",
+      "2--->Literal         #1   3                                 ",
+      "2--->Literal         #3   5                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "8"
+    ],
+    "errors": [],
+    "type": "Expression",
+    "comments": [],
+    "expr": "3+5",
+    "mask": "N#N",
+    "newMask": "N#N"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Call             #1   N                                 ",
+      "2--->Operator        #2   $                                 ",
+      "1-->Text             #3   N                                 "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Expression",
+    "comments": [],
+    "expr": "N$N",
+    "mask": "a#a",
+    "newMask": "a#a"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #1   >                                 result=<true>   ",
+      "2--->Literal         #2   20                                "
+    ],
+    "newTree": [],
+    "tests": [
+      "5,false",
+      "25,true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": ">20",
+    "mask": "#NN",
+    "newMask": "#NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Binary           #3   and                               ",
+      "2--->Operator        #1   >                                 ",
+      "3---->Literal        #2   30                                ",
+      "2--->Operator        #4   <                                 result=<true>   ",
+      "3---->Literal        #5   50                                "
+    ],
+    "newTree": [],
+    "tests": [
+      "40,true",
+      "10,false"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": ">30 and < 50",
+    "mask": "#NN aaa # NN",
+    "newMask": "#NN aaa # NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #3   or                                result=<true>   ",
+      "2--->Operator        #1   >                                 ",
+      "3---->Literal        #2   200                               ",
+      "2--->Operator        #4   <                                 result=<true>   ",
+      "3---->Literal        #5   500                               "
+    ],
+    "newTree": [],
+    "tests": [
+      "20, true",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "> 200 or < 500",
+    "mask": "# NNN aa # NNN",
+    "newMask": "# NNN aa # NNN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   50                                "
+    ],
+    "newTree": [],
+    "tests": [
+      "55, false"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "50",
+    "mask": "NN",
+    "newMask": "NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #2   +                                 result=<55>   ",
+      "2--->Literal         #1   20                                ",
+      "2--->Literal         #3   35                                "
+    ],
+    "newTree": [],
+    "tests": [
+      "55, true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "20+35",
+    "mask": "NN#NN",
+    "newMask": "NN#NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #3   or                                result=<true>   ",
+      "2--->Operator        #1   >                                 ",
+      "3---->Literal        #2   200                               ",
+      "2--->Operator        #4   <                                 result=<true>   ",
+      "3---->Literal        #5   500                               "
+    ],
+    "newTree": [],
+    "tests": [
+      "20, true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "> 200 or < 500",
+    "mask": "# NNN aa # NNN",
+    "newMask": "# NNN aa # NNN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Literal          #1   High                              result=<true>   "
+    ],
+    "newTree": [],
+    "tests": [
+      "'High', true",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "'High'",
+    "mask": "#aaaa#",
+    "newMask": "#aaaa#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   High                              "
+    ],
+    "newTree": [],
+    "tests": [
+      "'Low', false",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "'High'",
+    "mask": "#aaaa#",
+    "newMask": "#aaaa#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #3   or                                result=<true>   ",
+      "2--->Operator        #1   >                                 ",
+      "3---->Literal        #2   200                               ",
+      "2--->Operator        #4   <                                 result=<true>   ",
+      "3---->Literal        #5   500                               "
+    ],
+    "newTree": [],
+    "tests": [
+      "20, true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "> 200 or < 500",
+    "mask": "# NNN aa # NNN",
+    "newMask": "# NNN aa # NNN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #5   or                                result=<true>   ",
+      "2--->Bracket         #1   (                                 ",
+      "3---->Operator       #2   >                                 ",
+      "4----->Literal       #3   200                               ",
+      "2--->Bracket         #6   (                                 result=<true>   ",
+      "3---->Operator       #7   <                                 result=<true>   ",
+      "4----->Literal       #8   500                               "
+    ],
+    "newTree": [],
+    "tests": [
+      "20, true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "(> 200) or (< 500)",
+    "mask": "## NNN# aa ## NNN#",
+    "newMask": "## NNN# aa ## NNN#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Call             #1   in                                result=<true>   ",
+      "2--->Bracket         #2   (                                 ",
+      "3---->Literal        #3   abc                               ",
+      "3---->Operator       #4   ,                                 ",
+      "3---->Literal        #5   xyz-abc                           "
+    ],
+    "newTree": [],
+    "tests": [
+      "'abc', true    "
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in ('abc','xyz-abc')",
+    "mask": "#aa ##aaa###aaa#aaa##",
+    "newMask": "aa ##aaa###aaa#aaa##",
+    "maskDiff": "X XX X  X  X  XX  X "
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #9   and                               result=<true>   ",
+      "2--->Bracket         #1   (                                 result=<true>   ",
+      "3---->Call           #2   in                                result=<true>   ",
+      "4----->Bracket       #3   (                                 ",
+      "5------>Literal      #4   abc                               ",
+      "5------>Operator     #5   ,                                 ",
+      "5------>Literal      #6   xyz-abc                           ",
+      "2--->Call            #10  startsWith                        result=<true>   ",
+      "3---->Bracket        #11  (                                 ",
+      "4----->Literal       #12  a                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "'abc', true    ",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "(in ('abc','xyz-abc') ) and startsWith('a')",
+    "mask": "#aa ##aaa###aaa#aaa## # aaa aaaaaaaaaa##a##",
+    "newMask": "#aa ##aaa###aaa#aaa## # aaa aaaaaaaaaa##a##"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Call             #1   in                                result=<true>   ",
+      "2--->Bracket         #2   (                                 ",
+      "3---->Literal        #3   abc                               ",
+      "3---->Operator       #4   ,                                 ",
+      "3---->Literal        #5   xyz-abc                           ",
+      "3---->Operator       #6   ,                                 ",
+      "3---->Literal        #7   another entry                     ",
+      "3---->Operator       #8   ,                                 ",
+      "3---->Literal        #9   9                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "\"abc\",true",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in ('abc','xyz-abc','another entry', 9)",
+    "mask": "aa ##aaa###aaa#aaa###aaaaaaa aaaaa## N#",
+    "newMask": "aa ##aaa###aaa#aaa###aaaaaaa aaaaa## N#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Bracket          #1   (                                 result=<5>   ",
+      "2--->Operator        #3   +                                 result=<5>   ",
+      "3---->Literal        #2   2                                 ",
+      "3---->Literal        #4   3                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "5, true    "
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "(2+3)",
+    "mask": "#N#N#",
+    "newMask": "#N#N#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #2   +                                 result=<5>   ",
+      "2--->Literal         #1   2                                 ",
+      "2--->Literal         #3   3                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "5, true    "
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "2+3",
+    "mask": "N#N",
+    "newMask": "N#N"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #2   *                                 result=<8>   ",
+      "2--->Literal         #1   2                                 ",
+      "2--->Literal         #3   4                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "8, true    ",
+      "",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "2*4",
+    "mask": "N#N",
+    "newMask": "N#N"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #6   *                                 result=<20>   ",
+      "2--->Bracket         #1   (                                 result=<5>   ",
+      "3---->Operator       #3   +                                 result=<5>   ",
+      "4----->Literal       #2   2                                 ",
+      "4----->Literal       #4   3                                 ",
+      "2--->Literal         #7   4                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "20, true    ",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "(2+3)*4",
+    "mask": "#N#N##N",
+    "newMask": "#N#N##N"
+  },
+  {
+    "tree": [],
+    "newTree": [],
+    "tests": [
+      "'abc', true    "
+    ],
+    "errors": [
+      null
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "(in (abc,'xyz-abc') ) and startsWith('a')",
+    "mask": "#aa #aaa##aaa#aaa## # aaa aaaaaaaaaa##a##",
+    "newMask": "#aa #aaa##aaa#aaa## # aaa aaaaaaaaaa##a##"
+  },
+  {
+    "tree": [],
+    "newTree": [],
+    "tests": [
+      "'abc', true    ",
+      ""
+    ],
+    "errors": [
+      null
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in (abc,'xyz-abc') and startsWith('a')",
+    "mask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a##",
+    "newMask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a##"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Literal          #1   75.25                             result=<true>   "
+    ],
+    "newTree": [],
+    "tests": [
+      "75, false",
+      "75.25, true    "
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "75.25",
+    "mask": "NNNNN",
+    "newMask": "NNNNN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   2075.25                           "
+    ],
+    "newTree": [],
+    "tests": [
+      "75, false"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "2,075.25",
+    "mask": "N#NNNNNN",
+    "newMask": "N#NNNNNN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Literal          #1   2075.25                           result=<true>   "
+    ],
+    "newTree": [],
+    "tests": [
+      "2075.25, true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "2,075.25",
+    "mask": "N#NNNNNN",
+    "newMask": "N#NNNNNN"
+  },
+  {
+    "tree": [],
+    "newTree": [],
+    "tests": [
+      "'-20', true",
+      ""
+    ],
+    "errors": [
+      null
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "",
+    "mask": ""
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #1   >=                                result=<true>   ",
+      "2--->Literal         #2   75                                "
+    ],
+    "newTree": [],
+    "tests": [
+      "'75', true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": ">=75",
+    "mask": "##NN",
+    "newMask": "##NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #1   <=                                result=<true>   ",
+      "2--->Literal         #2   55                                "
+    ],
+    "newTree": [],
+    "tests": [
+      "'55', true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "<=55",
+    "mask": "##NN",
+    "newMask": "##NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #1   ==                                result=<true>   ",
+      "2--->Literal         #2   55                                "
+    ],
+    "newTree": [],
+    "tests": [
+      "'55', true",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "==55",
+    "mask": "##NN",
+    "newMask": "##NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Operator         #2   +                                 result=<5>   ",
+      "2--->Literal         #1   2                                 ",
+      "2--->Literal         #3   3                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "'5', true",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "2 + 3",
+    "mask": "N # N",
+    "newMask": "N # N"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #3   or                                result=<true>   ",
+      "2--->Operator        #1   >                                 ",
+      "3---->Literal        #2   200                               ",
+      "2--->Operator        #4   <                                 result=<true>   ",
+      "3---->Literal        #5   500                               "
+    ],
+    "newTree": [],
+    "tests": [
+      "20, true",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "> 200 or < 500",
+    "mask": "# NNN aa # NNN",
+    "newMask": "# NNN aa # NNN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Call             #1   object.fun                        result=<true>   ",
+      "2--->Bracket         #2   (                                 ",
+      "3---->Literal        #3   test                              "
+    ],
+    "newTree": [],
+    "tests": [
+      "'75', true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "object.fun('test')",
+    "mask": "aaaaaaaaaa##aaaa##",
+    "newMask": "aaaaaaaaaa##aaaa##"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Operator         #2   +                                 result=<6>   ",
+      "2--->Literal         #1   5                                 ",
+      "2--->Call            #3   object.fun                        result=<true>   ",
+      "3---->Bracket        #4   (                                 ",
+      "4----->Literal       #5   test                              "
+    ],
+    "newTree": [],
+    "tests": [
+      "'75', true",
+      ""
+    ],
+    "errors": [
+      "***Error -5 + object.fun('test') for 75 result: false expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "5 + object.fun('test')",
+    "mask": "N # aaaaaaaaaa##aaaa##",
+    "newMask": "N # aaaaaaaaaa##aaaa##"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Call             #1   in                                ",
+      "2--->Bracket         #2   (                                 ",
+      "3---->Call           #3   abc                               ",
+      "4----->Operator      #4   ,                                 ",
+      "3---->Literal        #5   xyz-abc                           ",
+      "3---->Operator       #6   ,                                 ",
+      "3---->Literal        #7   another entry                     "
+    ],
+    "newTree": [],
+    "tests": [
+      "\"abc",
+      "true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in (abc,'xyz-abc','another entry')",
+    "mask": "aa #aaa##aaa#aaa###aaaaaaa aaaaa##",
+    "newMask": "aa #aaa##aaa#aaa###aaaaaaa aaaaa##"
+  },
+  {
+    "tree": [],
+    "newTree": [],
+    "tests": [
+      "'abc', false",
+      "'axbc', true",
+      ""
+    ],
+    "errors": [
+      null
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "not in (abc,'xyz-abc') ",
+    "mask": "aaa aa #aaa##aaa#aaa## ",
+    "newMask": "aaa aa #aaa##aaa#aaa## "
+  },
+  {
+    "tree": [],
+    "newTree": [],
+    "tests": [
+      "'abc', true   "
+    ],
+    "errors": [
+      null
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in (abc,'xyz-abc') and startsWith('a') ",
+    "mask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a## ",
+    "newMask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a## "
+  },
+  {
+    "tree": [],
+    "newTree": [],
+    "tests": [
+      "'abc', false    "
+    ],
+    "errors": [
+      null
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in (abc,'xyz-abc') and not startsWith('a') ",
+    "mask": "aa #aaa##aaa#aaa## aaa aaa aaaaaaaaaa##a## "
+  },
+  {
+    "tree": [],
+    "newTree": [],
+    "tests": [
+      "'abc', false    "
+    ],
+    "errors": [
+      null
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in (abc,'xyz-abc') and startsWith('a')  and 3 ",
+    "mask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a##  aaa N ",
+    "newMask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a##  aaa N "
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Literal          #1   75                                "
+    ],
+    "newTree": [],
+    "tests": [
+      "'not 75', false"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "75",
+    "mask": "NN",
+    "newMask": "NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Literal          #1   High                              result=<true>   "
+    ],
+    "newTree": [],
+    "tests": [
+      "'High', true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "'High'",
+    "mask": "#aaaa#",
+    "newMask": "#aaaa#"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Call             #1   in                                ",
+      "2--->Bracket         #2   (                                 ",
+      "3---->Call           #3   abc                               ",
+      "4----->Operator      #4   ,                                 ",
+      "3---->Literal        #5   xyz-abc                           ",
+      "3---->Operator       #6   ,                                 ",
+      "3---->Literal        #7   another entry                     "
+    ],
+    "newTree": [],
+    "tests": [
+      "\"abc",
+      "true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in (abc,'xyz-abc','another entry')",
+    "mask": "aa #aaa##aaa#aaa###aaaaaaa aaaaa##",
+    "newMask": "aa #aaa##aaa#aaa###aaaaaaa aaaaa##"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Call             #1   between                           result=<true>   ",
+      "2--->Bracket         #2   (                                 ",
+      "3---->Literal        #3   95                                ",
+      "3---->Operator       #4   ,                                 ",
+      "3---->Literal        #5   2500.0                            "
+    ],
+    "newTree": [],
+    "tests": [
+      "200, true",
+      "",
+      ""
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "between ( 95 , 2500.0 )",
+    "mask": "aaaaaaa # NN # NNNNNN #",
+    "newMask": "aaaaaaa # NN # NNNNNN #"
+  }
+]

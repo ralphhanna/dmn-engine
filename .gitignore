@@ -1,0 +1,11 @@
+﻿/node_modules
+/obj
+*.log
+*.cmd
+*.sln
+*.njsproj
+*.njsproj.user
+*.txt
+*.txt.errors
+/bin
+token.json

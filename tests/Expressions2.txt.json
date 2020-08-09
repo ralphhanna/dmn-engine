@@ -1,0 +1,150 @@
+[
+  {
+    "tree": [
+      "0->Root              #0                                     result=<requesting contact.name but dont have any values>   ",
+      "1-->Text             #1   contact.name                      result=<requesting contact.name but dont have any values>   "
+    ],
+    "newTree": [
+      "0->Root              #0                                     ",
+      "1-->Text             #1   contact.name                      "
+    ],
+    "tests": [
+      "'Mr. Hanna'"
+    ],
+    "errors": [
+      "***Error -contact.name result: undefined expecting:Mr. Hanna"
+    ],
+    "type": "Expression",
+    "comments": [],
+    "expr": "contact.name",
+    "mask": "aaaaaaaaaaaa",
+    "newMask": "aaaaaaaaaaaa",
+    "maskDiff": ""
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Bracket          #1   (                                 ",
+      "2--->Operator        #2   >                                 ",
+      "3---->Literal        #3   2                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "5"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [
+      "",
+      "",
+      ""
+    ],
+    "expr": "( > 2)",
+    "mask": "# # N#",
+    "newMask": "# # N#",
+    "maskDiff": ""
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<requesting name but dont have any values>   ",
+      "1-->Text             #1   name                              result=<requesting name but dont have any values>   "
+    ],
+    "newTree": [
+      "0->Root              #0                                     ",
+      "1-->Text             #1   customer                          "
+    ],
+    "tests": [
+      "'Mr. Hanna'"
+    ],
+    "errors": [
+      "***Error -customer result: undefined expecting:Mr. Hanna"
+    ],
+    "type": "Expression",
+    "comments": [
+      "",
+      "",
+      ""
+    ],
+    "expr": "customer",
+    "mask": "aaaa",
+    "newMask": "aaaaaaaa",
+    "maskDiff": "    XXXX"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Bracket          #1   (                                 ",
+      "2--->Binary          #3   and                               ",
+      "3---->Literal        #2   3                                 ",
+      "3---->Literal        #4   2                                 "
+    ],
+    "newTree": [],
+    "tests": [],
+    "errors": [],
+    "type": "Expression",
+    "comments": [],
+    "expr": "(3 and 2)",
+    "mask": "#N aaa N#",
+    "newMask": "#N aaa N#",
+    "maskDiff": ""
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<3>   ",
+      "1-->Bracket          #1   (                                 result=<3>   ",
+      "2--->Literal         #2   3                                 result=<3>   ",
+      "2--->Operator        #3   >                                 ",
+      "3---->Literal        #4   2                                 "
+    ],
+    "newTree": [
+      "0->Root              #0                                     ",
+      "1-->Bracket          #1   (                                 ",
+      "2--->Operator        #3   >                                 ",
+      "3---->Literal        #2   3                                 ",
+      "3---->Literal        #4   2                                 "
+    ],
+    "tests": [
+      "true"
+    ],
+    "errors": [
+      "***Error -(3 > 2) result: false expecting:true"
+    ],
+    "type": "Expression",
+    "comments": [
+      "",
+      ""
+    ],
+    "expr": "(3 > 2)",
+    "mask": "#aa #aaa##aaa#aaa## aaa  # N #",
+    "newMask": "#N # N#",
+    "maskDiff": " XXXXXX"
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<600>   ",
+      "1-->Operator         #8   *                                 result=<600>   ",
+      "2--->Bracket         #1   (                                 result=<6>   ",
+      "3---->Operator       #3   +                                 result=<6>   ",
+      "4----->Literal       #2   4                                 ",
+      "4----->Operator      #5   -                                 result=<2>   ",
+      "5------>Literal      #4   3                                 ",
+      "5------>Literal      #6   1                                 ",
+      "2--->Operator        #10  ^                                 result=<100>   ",
+      "3---->Literal        #9   10                                ",
+      "3---->Literal        #11  2                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "600"
+    ],
+    "errors": [],
+    "type": "Expression",
+    "comments": [
+      ""
+    ],
+    "expr": "(4 + 3 - 1) * 10 ^2",
+    "mask": "#N # N # N# # NN #N",
+    "newMask": "#N # N # N# # NN #N",
+    "maskDiff": ""
+  }
+]

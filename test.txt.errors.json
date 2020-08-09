@@ -1,0 +1,92 @@
+[
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Binary           #7   and                               ",
+      "2--->Call            #1   in                                ",
+      "3---->Bracket        #2   (                                 ",
+      "4----->Literal       #3   abc                               ",
+      "4----->Operator      #4   ,                                 ",
+      "4----->Literal       #5   xyz-abc                           ",
+      "2--->Call            #8   startsWith                        ",
+      "3---->Bracket        #9   (                                 ",
+      "4----->Literal       #10  a                                 "
+    ],
+    "newTree": [],
+    "tests": [
+      "'75', true",
+      "//",
+      "//"
+    ],
+    "errors": [
+      "***Error -in ('abc','xyz-abc') and startsWith('a') for 75 result: false expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "in ('abc','xyz-abc') and startsWith('a')",
+    "newMask": "aa ##aaa###aaa#aaa## aaa aaaaaaaaaa##a##",
+    "maskDiff": "",
+    "mask": "aa ##aaa###aaa#aaa## aaa aaaaaaaaaa##a##"
+  },
+  {
+    "tree": [],
+    "newTree": [],
+    "tests": [
+      "'75', true"
+    ],
+    "errors": [
+      "Cannot read property 'funt' of undefined"
+    ],
+    "type": "Condition",
+    "comments": [],
+    "expr": "obj.funt('test')",
+    "mask": "aaaaaaaa##aaaa##",
+    "newMask": "aaaaaaaa##aaaa##",
+    "maskDiff": ""
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Call             #1   object.fun                        result=<true>   ",
+      "2--->Bracket         #2   (                                 ",
+      "3---->Literal        #3   test                              "
+    ],
+    "newTree": [],
+    "tests": [
+      "'75', true"
+    ],
+    "errors": [],
+    "type": "Condition",
+    "comments": [],
+    "expr": "object.fun('test')",
+    "mask": "aaaaaaaaaa##aaaa##",
+    "newMask": "aaaaaaaaaa##aaaa##",
+    "maskDiff": ""
+  },
+  {
+    "tree": [
+      "0->Root              #0                                     ",
+      "1-->Operator         #2   +                                 result=<6>   ",
+      "2--->Literal         #1   5                                 ",
+      "2--->Call            #3   object.fun                        result=<true>   ",
+      "3---->Bracket        #4   (                                 ",
+      "4----->Literal       #5   test                              "
+    ],
+    "newTree": [],
+    "tests": [
+      "'75', true"
+    ],
+    "errors": [
+      "***Error -5 + object.fun('test') for 75 result: false expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "",
+      ""
+    ],
+    "expr": "5 + object.fun('test')",
+    "mask": "N # aaaaaaaaaa##aaaa##",
+    "newMask": "N # aaaaaaaaaa##aaaa##",
+    "maskDiff": ""
+  }
+]

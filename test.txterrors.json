@@ -1,0 +1,222 @@
+[
+  {
+    "tree": [
+      "0->Root              #0   ",
+      "1-->Bracket          #1   (",
+      "1-->Call             #2   in",
+      "2--->Bracket         #3   (",
+      "3---->Literal        #4   abc",
+      "3---->Operator       #5   ,",
+      "3---->Literal        #6   xyz-abc",
+      "1-->Binary           #9   and",
+      "2--->Call            #10  startsWith",
+      "3---->Bracket        #11  (",
+      "4----->Literal       #12  a",
+      "2--->Operator        #8   )"
+    ],
+    "newTree": [],
+    "tests": [
+      "'abc', true    ",
+      ""
+    ],
+    "errors": [
+      "***Error -(in ('abc','xyz-abc') ) and startsWith('a') for abc result: undefined expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "-",
+      "-"
+    ],
+    "expr": "(in ('abc','xyz-abc') ) and startsWith('a')",
+    "mask": "#aa ##aaa###aaa#aaa## # aaa aaaaaaaaaa##a##",
+    "newMask": "#aa ##aaa###aaa#aaa## # aaa aaaaaaaaaa##a##"
+  },
+  {
+    "tree": [
+      "0->Root              #0   ",
+      "1-->Bracket          #1   (",
+      "1-->Call             #2   in",
+      "2--->Bracket         #3   (",
+      "3---->Text           #4   abc",
+      "3---->Operator       #5   ,",
+      "3---->Literal        #6   xyz-abc",
+      "1-->Binary           #9   and",
+      "2--->Call            #10  startsWith",
+      "3---->Bracket        #11  (",
+      "4----->Literal       #12  a",
+      "2--->Operator        #8   )"
+    ],
+    "newTree": [],
+    "tests": [
+      "'abc', true    "
+    ],
+    "errors": [
+      "***Error -(in (abc,'xyz-abc') ) and startsWith('a') for abc result: undefined expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "-",
+      "-"
+    ],
+    "expr": "(in (abc,'xyz-abc') ) and startsWith('a')",
+    "mask": "#aa #aaa##aaa#aaa## # aaa aaaaaaaaaa##a##",
+    "newMask": "#aa #aaa##aaa#aaa## # aaa aaaaaaaaaa##a##"
+  },
+  {
+    "tree": [
+      "0->Root              #0   ",
+      "1-->Operator         #1   ==",
+      "1-->Literal          #2   55"
+    ],
+    "newTree": [],
+    "tests": [
+      "'55', true",
+      ""
+    ],
+    "errors": [
+      "***Error -==55 for 55 result: false expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "-",
+      "-"
+    ],
+    "expr": "==55",
+    "mask": "##NN",
+    "newMask": "##NN"
+  },
+  {
+    "tree": [
+      "0->Root              #0   ",
+      "1-->Call             #1   object.fun",
+      "2--->Bracket         #2   (",
+      "3---->Literal        #3   test"
+    ],
+    "newTree": [],
+    "tests": [
+      "'75', true"
+    ],
+    "errors": [
+      "***Error -object.fun('test') for 75 result: undefined expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "-",
+      "-"
+    ],
+    "expr": "object.fun('test')",
+    "mask": "aaaaaaaaaa##aaaa##",
+    "newMask": "aaaaaaaaaa##aaaa##"
+  },
+  {
+    "tree": [
+      "0->Root              #0   ",
+      "1-->Operator         #2   +",
+      "2--->Call            #3   object.fun",
+      "3---->Bracket        #4   (",
+      "4----->Literal       #5   test",
+      "2--->Literal         #1   5"
+    ],
+    "newTree": [],
+    "tests": [
+      "'75', true",
+      ""
+    ],
+    "errors": [
+      "***Error -5 + object.fun('test') for 75 result: object.fun5 expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "-",
+      "-"
+    ],
+    "expr": "5 + object.fun('test')",
+    "mask": "N # aaaaaaaaaa##aaaa##",
+    "newMask": "N # aaaaaaaaaa##aaaa##"
+  },
+  {
+    "tree": [
+      "0->Root              #0   ",
+      "1-->Binary           #1   not",
+      "2--->Call            #2   in",
+      "3---->Bracket        #3   (",
+      "4----->Text          #4   abc",
+      "4----->Operator      #5   ,",
+      "4----->Literal       #6   xyz-abc"
+    ],
+    "newTree": [],
+    "tests": [
+      "'abc', true"
+    ],
+    "errors": [
+      "***Error -not in (abc,'xyz-abc')  for abc result: false expecting:<true>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "-",
+      "-"
+    ],
+    "expr": "not in (abc,'xyz-abc') ",
+    "mask": "aaa aa #aaa##aaa#aaa## ",
+    "newMask": "aaa aa #aaa##aaa#aaa## "
+  },
+  {
+    "tree": [
+      "0->Root              #0   ",
+      "1-->Binary           #7   and",
+      "2--->Call            #8   startsWith",
+      "3---->Bracket        #9   (",
+      "4----->Literal       #10  a",
+      "2--->Call            #1   in",
+      "3---->Bracket        #2   (",
+      "4----->Text          #3   abc",
+      "4----->Operator      #4   ,",
+      "4----->Literal       #5   xyz-abc"
+    ],
+    "newTree": [],
+    "tests": [
+      "'abc', true    //  not , in, 'abc', 'xyz-abc'"
+    ],
+    "errors": [
+      "***Error -in (abc,'xyz-abc') and startsWith('a')  for abc result: true expecting:<true    //  not>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "-",
+      "-"
+    ],
+    "expr": "in (abc,'xyz-abc') and startsWith('a') ",
+    "mask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a## ",
+    "newMask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a## "
+  },
+  {
+    "tree": [
+      "0->Root              #0   ",
+      "1-->Binary           #7   and",
+      "2--->Binary          #8   not",
+      "3---->Call           #1   in",
+      "4----->Bracket       #2   (",
+      "5------>Text         #3   abc",
+      "5------>Operator     #4   ,",
+      "5------>Literal      #5   xyz-abc",
+      "1-->Call             #9   startsWith",
+      "2--->Bracket         #10  (",
+      "3---->Literal        #11  a"
+    ],
+    "newTree": [],
+    "tests": [
+      "'abc', false    //  not , in, 'abc', 'xyz-abc'"
+    ],
+    "errors": [
+      "***Error -in (abc,'xyz-abc') and not startsWith('a')  for abc result: false expecting:<false    //  not>"
+    ],
+    "type": "Condition",
+    "comments": [
+      "-",
+      "-"
+    ],
+    "expr": "in (abc,'xyz-abc') and not startsWith('a') ",
+    "mask": "aa #aaa##aaa#aaa## aaa aaa aaaaaaaaaa##a## ",
+    "newMask": "aa #aaa##aaa#aaa## aaa aaa aaaaaaaaaa##a## "
+  }
+]
