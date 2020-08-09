@@ -1,6 +1,6 @@
 {
   "name": "dmn-engine",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Business Rules Engine for Javascript and Node.js, with built-in Expression Language supporting DMN Decision Table",
   "main": "index.js",
   "author": {
