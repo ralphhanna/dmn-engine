@@ -8,4 +8,5 @@
 *.txt
 *.txt.errors
 /bin
+/jison
 token.json
