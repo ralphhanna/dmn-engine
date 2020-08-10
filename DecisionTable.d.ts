@@ -6,6 +6,12 @@ export declare enum HIT_POLICY {
     RuleOrder = "Order",
     Collect = "Collect+"
 }
+export declare class DTOutput {
+    input: {};
+    rules: any[];
+    successCount: number;
+    actions: {};
+}
 export declare class DTVariable {
     name: any;
     type: 'String' | 'Number' | 'Money' | 'Date';

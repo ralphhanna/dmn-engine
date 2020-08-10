@@ -9,7 +9,13 @@ export enum HIT_POLICY {
     RuleOrder = 'Order',
     Collect = 'Collect+'
 }
+export class DTOutput {
+    input = {};
+    rules=[];
+    successCount = 0;
+    actions = {};
 
+}
 export class DTVariable {
     name;
     type: 'String'|'Number'|'Money'|'Date';
@@ -66,8 +72,9 @@ export class DecisionTable {
         return image;
     }
     evaluate(data) {
-        const output = { _results: [], _success: 0 };
+        const output = new DTOutput(); //= { _results: [], _success: 0 };
         var r = 0;
+        output.input = data;
         const rules = this.rules;
         let ret;
         for (r = 0; r < rules.length; r++) {
@@ -76,12 +83,12 @@ export class DecisionTable {
             ret = rule.evaluate(data, result);
             if (ret) {
                 console.log(" Rule #" + rule.id + " has returned");
-                output._success++;
-                output._results.push(result);
+                output.successCount++;
+                output.rules.push(result);
             }
             else {
                 console.log(" Rule #" + rule.id + " has failed on " + result['failedCondition'] +" condition");
-                output._results.push(result);
+                output.rules.push(result);
                 if (!this.processAll)
                     break;
             }
@@ -92,20 +99,23 @@ export class DecisionTable {
 
     }
     private processResults(output) {
+        console.log(output);
         let operation = (this.hitPolicy =='Collect+')?'+':'';
-
-        output._results.forEach(result => {
+        output.rules.forEach(result => {
             if (result.output) {
+                console.log("output:");
+                console.log(result.output)
+
                 this.actionVars.forEach(action => {
                     switch (operation) {
                         case '':
                             output[action.name] = result.output[action.name];
                             break;
                         case '+':
-                            if (output[action.name])
-                                output[action.name] += result.output[action.name];
+                            if (output.actions[action.name])
+                                output.actions[action.name] += result.output[action.name];
                             else
-                                output[action.name] = result.output[action.name];
+                                output.actions[action.name] = result.output[action.name];
 
                             break;
                     }

@@ -31,7 +31,7 @@ Rules:
 Tests	5	"Employee"
  */
 function parseRule(rows) {
-    let dt = { name: null, hitPolicy: null, inputVars: [], actionVars: [], rules: [], tests: [] };
+    let dt = { name: null, hitPolicy: null, conditionVars: [], actionVars: [], rules: [], tests: [] };
     let varTypes = null;
     let c, inputStart, outputStart, annotationStart, hitPolicyPosition;
     let r = 1;
@@ -77,7 +77,7 @@ function parseRule(rows) {
                             break;
                         case 'Variables':
                             for (c = inputStart; c < outputStart; c++) {
-                                dt.inputVars.push({ name: row[c] });
+                                dt.conditionVars.push({ name: row[c] });
                             }
                             for (c = outputStart; c < annotationStart && c < row.length; c++) {
                                 dt.actionVars.push({ name: row[c] });
@@ -100,23 +100,26 @@ function parseRule(rows) {
     });
     //console.log(dt);
     console.log(dt.tests);
-    const decisionTable = new DecisionTable_1.DecisionTable({
+    /*
+    const decisionTable = new DecisionTable({
         name: dt.name, conditionVars: dt.inputVars, actionVars: dt.actionVars,
         rules: dt.rules, hitPolicy: dt.hitPolicy
     });
-    console.log(decisionTable);
+
+    console.log(decisionTable);*/
+    const data = [];
     dt.tests.forEach(test => {
-        const data = {};
+        const record = {};
         let i;
-        for (i = 0; i < dt.inputVars.length; i++) {
-            const varName = dt.inputVars[i].name;
-            data[varName] = trimParam(test[i + 1]);
+        for (i = 0; i < dt.conditionVars.length; i++) {
+            const varName = dt.conditionVars[i].name;
+            record[varName] = trimParam(test[i + 1]);
         }
-        console.log("Evaluating rule against: ");
-        console.log(data);
-        const results = decisionTable.evaluate(data);
-        console.log(results);
+        data.push(record);
+        //const results = decisionTable.evaluate(data);
     });
+    const results = DecisionTable_1.DecisionTable.execute(dt, data);
+    console.log(results);
 }
 function trimParam(param) {
     if (param.startsWith('"') && param.endsWith('"'))

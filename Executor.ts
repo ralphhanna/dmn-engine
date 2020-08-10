@@ -32,12 +32,12 @@ export class Executor {
      * values could be children nodes or group
      * */
     getValue(child) {
-        let val = this.evaluate(child);
-        let v2 = parseFloat(val);
+        return  this.evaluate(child);
+/*        let v2 = parseFloat(val);
         if (!isNaN(v2))
             val = v2;
 
-        return val;
+        return val; */
 
     }
     getValues(expr) {
@@ -135,6 +135,10 @@ export class Executor {
                 break;
 
         }
+
+        let val = parseFloat(ret);
+        if (!isNaN(val))
+            ret = val;
         debug('execution', " executing " + expr.type + expr.value + " result: " + ret);
         expr.result = ret;
         return ret;

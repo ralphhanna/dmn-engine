@@ -27,11 +27,12 @@ class Executor {
      * values could be children nodes or group
      * */
     getValue(child) {
-        let val = this.evaluate(child);
-        let v2 = parseFloat(val);
-        if (!isNaN(v2))
-            val = v2;
-        return val;
+        return this.evaluate(child);
+        /*        let v2 = parseFloat(val);
+                if (!isNaN(v2))
+                    val = v2;
+        
+                return val; */
     }
     getValues(expr) {
         const values = [];
@@ -114,6 +115,9 @@ class Executor {
                 //ret = this.delegate.executeOperator(expr.value, values, value, isCondition);
                 break;
         }
+        let val = parseFloat(ret);
+        if (!isNaN(val))
+            ret = val;
         common_1.debug('execution', " executing " + expr.type + expr.value + " result: " + ret);
         expr.result = ret;
         return ret;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DecisionTable = exports.DTVariable = exports.HIT_POLICY = void 0;
+exports.DecisionTable = exports.DTVariable = exports.DTOutput = exports.HIT_POLICY = void 0;
 const Rule_1 = require("./Rule");
 var HIT_POLICY;
 (function (HIT_POLICY) {
@@ -10,6 +10,15 @@ var HIT_POLICY;
     HIT_POLICY["RuleOrder"] = "Order";
     HIT_POLICY["Collect"] = "Collect+";
 })(HIT_POLICY = exports.HIT_POLICY || (exports.HIT_POLICY = {}));
+class DTOutput {
+    constructor() {
+        this.input = {};
+        this.rules = [];
+        this.successCount = 0;
+        this.actions = {};
+    }
+}
+exports.DTOutput = DTOutput;
 class DTVariable {
 }
 exports.DTVariable = DTVariable;
@@ -55,8 +64,9 @@ class DecisionTable {
         return image;
     }
     evaluate(data) {
-        const output = { _results: [], _success: 0 };
+        const output = new DTOutput(); //= { _results: [], _success: 0 };
         var r = 0;
+        output.input = data;
         const rules = this.rules;
         let ret;
         for (r = 0; r < rules.length; r++) {
@@ -65,12 +75,12 @@ class DecisionTable {
             ret = rule.evaluate(data, result);
             if (ret) {
                 console.log(" Rule #" + rule.id + " has returned");
-                output._success++;
-                output._results.push(result);
+                output.successCount++;
+                output.rules.push(result);
             }
             else {
                 console.log(" Rule #" + rule.id + " has failed on " + result['failedCondition'] + " condition");
-                output._results.push(result);
+                output.rules.push(result);
                 if (!this.processAll)
                     break;
             }
@@ -80,19 +90,22 @@ class DecisionTable {
         //console.log("**No Rule has returned**");
     }
     processResults(output) {
+        console.log(output);
         let operation = (this.hitPolicy == 'Collect+') ? '+' : '';
-        output._results.forEach(result => {
+        output.rules.forEach(result => {
             if (result.output) {
+                console.log("output:");
+                console.log(result.output);
                 this.actionVars.forEach(action => {
                     switch (operation) {
                         case '':
                             output[action.name] = result.output[action.name];
                             break;
                         case '+':
-                            if (output[action.name])
-                                output[action.name] += result.output[action.name];
+                            if (output.actions[action.name])
+                                output.actions[action.name] += result.output[action.name];
                             else
-                                output[action.name] = result.output[action.name];
+                                output.actions[action.name] = result.output[action.name];
                             break;
                     }
                 });
