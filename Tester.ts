@@ -2,10 +2,9 @@
 import { logger, debug, TOKEN_GROUP, EXPRESSION_TYPE, Options } from './common';
 
 import { Parser } from './ExpressionParser';
-import { ExpressionEngine } from './ExpressionEngine';
 import { Expression, Condition } from './ExpressionNode';
-import { ExecutionContext } from './Addins';
-import { DefaultImplementor } from './Implementor';
+import { ExecutionContext } from './Implementor';
+
 const fs = require('fs');
 
 Options.debugExecution = true;

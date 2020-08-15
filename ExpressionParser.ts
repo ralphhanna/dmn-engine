@@ -1,8 +1,6 @@
 
 import { Expression, ExpressionNode } from './ExpressionNode'
-import { RulesDelegate } from './RulesDelegate';
 import { TreeBuilder} from './TreeBuilder';
-import { Executor } from './Executor';
 import { logger, debug , TOKEN_GROUP ,EXPRESSION_TYPE , Options} from './common';
 
 //var REGEX = /([a-zA-Z\u0080-\u00FF\.]+)|([0-9\.]+)|(,|!|\?|\)|\(|\"|\'|<|=|>|\+|-|\*|\/)|(\s)/g;

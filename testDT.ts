@@ -7,6 +7,7 @@ testDT();
 
 function testDT() {
     console.log('=====');
+
 const dt1Json =
 {
     name: "Banking",

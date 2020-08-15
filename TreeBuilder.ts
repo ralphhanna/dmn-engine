@@ -1,4 +1,3 @@
-import { RulesDelegate } from './RulesDelegate';
 import { logger, debug , TOKEN_GROUP ,EXPRESSION_TYPE} from './common';
 import { ExpressionNode, TreeNode } from './ExpressionNode';
 import { Token } from './ExpressionParser';

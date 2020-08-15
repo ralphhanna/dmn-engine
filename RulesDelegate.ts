@@ -1,5 +1,5 @@
 import { Executor } from "./Executor";
-import { ExecutionContext } from "./Addins";
+import { ExecutionContext } from "./Implementor";
 
 class CustomFuntions extends ExecutionContext {
 

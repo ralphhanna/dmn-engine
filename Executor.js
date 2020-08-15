@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Executor = void 0;
 const common_1 = require("./common");
 const Operator_1 = require("./Operator");
-const Addins_1 = require("./Addins");
+const Implementor_1 = require("./Implementor");
 class Executor {
     constructor(data) {
-        this.context = new Addins_1.ExecutionContext(data);
+        this.context = new Implementor_1.ExecutionContext(data);
         this.delegate = common_1.Options.delegate;
         this.delegate.init(this, data);
     }

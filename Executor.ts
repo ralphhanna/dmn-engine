@@ -2,7 +2,7 @@ import { debug , logger , EXPRESSION_TYPE, Options } from './common';
 import { Expresion } from './parser';
 import { ExpressionNode } from './ExpressionNode';
 import { Operator } from './Operator';
-import { ExecutionContext} from './Addins'
+import { ExecutionContext} from './Implementor'
 
 export class Executor {
     delegate;   // to perform custom functions and operations

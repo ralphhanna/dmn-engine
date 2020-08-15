@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ExecutionContext = exports.DefaultImplementor = void 0;
+exports.ExpressionString = exports.ExpressionTime = exports.ExpressionDate = exports.ExecutionContext = exports.DefaultImplementor = void 0;
 /**
  * class structure
  *      DefaultImplementor
@@ -30,8 +30,10 @@ exports.ExecutionContext = ExecutionContext;
 class ExpressionDate {
     now() { return new Date(); }
 }
+exports.ExpressionDate = ExpressionDate;
 class ExpressionTime {
 }
+exports.ExpressionTime = ExpressionTime;
 class ExpressionString {
     size(values) { console.log('String.size:', values[0], values[0].length); return values[0].length; }
     /**
@@ -47,4 +49,5 @@ class ExpressionString {
     endsWith(str, check) { return str.endsWith(check); }
     contains(str1, check) { return str1.includes(check); }
 }
+exports.ExpressionString = ExpressionString;
 //# sourceMappingURL=Implementor.js.map

@@ -36,11 +36,16 @@ export declare class DecisionTable {
      * @param dtDefinition
      * @param data
      */
-    static execute(dtDefinition: any, data: any): any[];
+    static execute(dtDefinition: any, data: any): {
+        decisionTable: DecisionTable;
+        results: any[];
+    };
     compile(): {
         rules: any[];
     };
     evaluate(data: any): any;
     private processResults;
-    saveAsJson(): string;
+    save(fileName: any): void;
+    static load(fileName: any): DecisionTable;
+    asJson(): string;
 }

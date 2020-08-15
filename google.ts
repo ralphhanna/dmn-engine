@@ -20,112 +20,102 @@ Rules:
 
 Tests	5	"Employee"
  */
-function parseRule(rows) {
-    let dt = { name: null, hitPolicy: null, conditionVars: [], actionVars: [] ,rules: [], tests: []};
-    let varTypes = null;
-    let c, inputStart, outputStart, annotationStart, hitPolicyPosition;
-    let r = 1;
-    let mode = '';
-    rows.forEach(row => {
-        console.log(row)
-        if (row.length > 0) {
-            const title = row[0];
-            console.log('row ' + r + " " + title + " mode: " + mode);
-            switch (title) {
-                case 'Decision':
-                    for (c = 1; c < row.length; c++) {
-                        if (row[c] == 'Hit Policy')
-                            hitPolicyPosition= c;
-                    }
-                    mode = 'Decision';
-                    break;
-                case 'Variables':
-                    mode = 'VariableTypes';
-                    break;
-                case 'Rules:':
-                    mode = 'Rules';
-                    break;
-                case 'Tests:':
-                    mode = 'Tests';
-                    break;
-                default:
-                    switch (mode) {
-                        case 'Decision':
-                            dt.name = row[0];
-                            dt.hitPolicy = row[hitPolicyPosition];
-                            break;
-                        case 'VariableTypes':
-                            
-                            for (c = 1; c < row.length; c++) {
-                                if (row[c] == 'Input')
-                                    inputStart = c;
-                                else if (row[c] == 'Output')
-                                    outputStart = c;
-                                else if (row[c] == 'Annotation')
-                                    annotationStart = c;
-                            }
-                            mode = 'Variables';
-                            break;
-                        case 'Variables':
-                            for (c = inputStart; c < outputStart; c++) {
-                                dt.conditionVars.push({ name: row[c] });
-                            }
-                            for (c = outputStart; c < annotationStart && c < row.length; c++) {
-                                dt.actionVars.push({ name: row[c] });
-                            }
-                            mode = '';
-                            break;
-                        case 'Rules':
-                            dt.rules.push(row);
-                            break;
-                        case 'Tests':
-                            dt.tests.push(row);
-                            break;
-                    }
+class CSVReader {
 
-                    break;
+    static parseRule(rows) {
+        const dt = { name: null, hitPolicy: null, conditionVars: [], actionVars: [], rules: [] };
+        const tests = [];
+        let varTypes = null;
+        let c, inputStart, outputStart, annotationStart, hitPolicyPosition;
+        let r = 1;
+        let mode = '';
+        rows.forEach(row => {
+            console.log(row)
+            if (row.length > 0) {
+                const title = row[0];
+                console.log('row ' + r + " " + title + " mode: " + mode);
+                switch (title) {
+                    case 'Decision':
+                        for (c = 1; c < row.length; c++) {
+                            if (row[c] == 'Hit Policy')
+                                hitPolicyPosition = c;
+                        }
+                        mode = 'Decision';
+                        break;
+                    case 'Variables':
+                        mode = 'VariableTypes';
+                        break;
+                    case 'Rules:':
+                        mode = 'Rules';
+                        break;
+                    case 'Tests:':
+                        mode = 'Tests';
+                        break;
+                    default:
+                        switch (mode) {
+                            case 'Decision':
+                                dt.name = row[0];
+                                dt.hitPolicy = row[hitPolicyPosition];
+                                break;
+                            case 'VariableTypes':
+
+                                for (c = 1; c < row.length; c++) {
+                                    if (row[c] == 'Input')
+                                        inputStart = c;
+                                    else if (row[c] == 'Output')
+                                        outputStart = c;
+                                    else if (row[c] == 'Annotation')
+                                        annotationStart = c;
+                                }
+                                mode = 'Variables';
+                                break;
+                            case 'Variables':
+                                for (c = inputStart; c < outputStart; c++) {
+                                    dt.conditionVars.push({ name: row[c] });
+                                }
+                                for (c = outputStart; c < annotationStart && c < row.length; c++) {
+                                    dt.actionVars.push({ name: row[c] });
+                                }
+                                mode = '';
+                                break;
+                            case 'Rules':
+                                dt.rules.push(row);
+                                break;
+                            case 'Tests':
+                                let i;
+                                const record = {};
+                                for (i = 0; i < dt.conditionVars.length; i++) {
+                                    const varName = dt.conditionVars[i].name;
+                                    record[varName] = CSVReader.trimParam(row[i + 1]);
+                                }
+                                record['__ID'] = r;
+
+                                tests.push(record);
+                                break;
+                        }
+
+                        break;
+
+                }
 
             }
-
-        }
+            else
+                mode = '';
+            r++;
+        });
+        //console.log(dt);
+        // console.log(dt.tests);
+        return {decisionTable: dt, tests}
+    }
+    static trimParam(param) {
+        if (param.startsWith('"') && param.endsWith('"'))
+            return param.substring(1, param.length - 1);
+        if (param.startsWith("'") && param.endsWith("'"))
+            return param.substring(1, param.length - 1);
         else
-            mode = '';
-        r++;
-    });
-    //console.log(dt);
-    console.log(dt.tests);
-    /*
-    const decisionTable = new DecisionTable({
-        name: dt.name, conditionVars: dt.inputVars, actionVars: dt.actionVars,
-        rules: dt.rules, hitPolicy: dt.hitPolicy
-    });
-
-    console.log(decisionTable);*/
-    const data = [];
-    dt.tests.forEach(test => {
-        const record = {};
-        let i;
-        for (i = 0; i < dt.conditionVars.length; i++) {
-            const varName = dt.conditionVars[i ].name;
-            record[varName] = trimParam(test[i+1]);
-        }
-        data.push(record);    
-
-        //const results = decisionTable.evaluate(data);
-    });
-    const results = DecisionTable.execute(dt, data);
-    console.log(results);
-
+            return param.trim();
+    }
 }
-function trimParam(param) {
-    if (param.startsWith('"') && param.endsWith('"'))
-        return param.substring(1, param.length - 1);
-    if (param.startsWith("'") && param.endsWith("'"))
-        return param.substring(1, param.length - 1);
-    else
-        return param.trim();
-}
-
 
 export class GoogleSheets {
 
@@ -138,13 +128,13 @@ export class GoogleSheets {
         // Authorize a client with credentials, then call the Google Sheets API.
         //  authorize(JSON.parse(content), listMajors);
         // authorize(JSON.parse(content), doIt);
-        let token = await authorizeAsync(JSON.parse(content));
+        let token = await this.authorizeAsync(JSON.parse(content));
         this.auth=token;
     }
     async getRule(spreadsheetId, range) {
         const rows = await this.getData(spreadsheetId, range);
         console.log(rows);
-        parseRule(rows);
+        return CSVReader.parseRule(rows);
     }
     async getData(spreadsheetId, range) {
 
@@ -175,6 +165,40 @@ export class GoogleSheets {
             });
         });
     }
+/**
+ * Create an OAuth2 client with the given credentials, and then execute the
+ * given callback function.
+ * @param {Object} credentials The authorization client credentials.
+ * @param {function} callback The callback to call with the authorized client.
+ */
+async authorizeAsync(credentials) {
+    const { client_secret, client_id, redirect_uris } = credentials.installed;
+
+    /*
+    return new Promise((resolve, reject) => {
+            ...
+            resolve(data)
+        })
+    }); */
+
+    return new Promise((resolve, reject) => {
+
+        const oAuth2Client = new google.auth.OAuth2(
+            client_id, client_secret, redirect_uris[0]);
+
+        // Check if we have previously stored a token.
+        fs.readFile(TOKEN_PATH, (err, token) => {
+            if (err) {
+                //   return getNewToken(oAuth2Client, callback);
+            }
+            oAuth2Client.setCredentials(JSON.parse(token));
+            // callback(oAuth2Client);
+            resolve(oAuth2Client)
+        });
+
+    });
+
+}
 }
 
 // If modifying these scopes, delete token.json.
@@ -193,169 +217,28 @@ fs.readFile('credentials.json', (err, content) => {
   
 });
 */
-function listData(auth,spreadsheetId,range) {
-  const sheets = google.sheets({version: 'v4', auth});
-  sheets.spreadsheets.values.get({
-    // spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-	spreadsheetId: spreadsheetId,
-    range: range,
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    const rows = res.data.values;
-	let r=1;
-    if (rows.length) {
-      console.log('Range:' + range);
-      // Print columns A and E, which correspond to indices 0 and 4.
-      rows.map((row) => {
-		  console.log('Row: ',r++,row);
-//        console.log(`${row[0]}, ${row[4]}`);
-      });
-    } else {
-      console.log('No data found.');
-    }
-  });
-}
-function doIt(auth){
-
-var id ='13O_4UhOKB6YPybQaoRdhMqopqa0RjG8qXIIyRU7Q890';///edit#gid=1076308066';
-var sheetId = '1076308066';
-		//listMajors(auth);
-		listData(auth,id,'Vacation');
-		
-}
-
-/**
- * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
- * @param {Object} credentials The authorization client credentials.
- * @param {function} callback The callback to call with the authorized client.
- */
-function authorize(credentials, callback) {
-  const {client_secret, client_id, redirect_uris} = credentials.installed;
-  const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris[0]);
-
-  // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getNewToken(oAuth2Client, callback);
-    oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
-  });
-}
-
-/**
- * Get and store new token after prompting for user authorization, and then
- * execute the given callback with the authorized OAuth2 client.
- * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
- * @param {getEventsCallback} callback The callback for the authorized client.
- */
-function getNewToken(oAuth2Client, callback) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
-  });
-  console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rl.question('Enter the code from that page here: ', (code) => {
-    rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error while trying to retrieve access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
-      });
-      callback(oAuth2Client);
-    });
-  });
-}
-
-/**
- * Prints the names and majors of students in a sample spreadsheet:
- * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
- 
-		https://docs.google.com/spreadsheets/d/11h4kO2_-sLjruh77hV4ek8YgiE2r42uHs5_RyFJB_KM/edit#gid=786379238
- * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
- */
-function listMajors(auth) {
-  const sheets = google.sheets({version: 'v4', auth});
-  sheets.spreadsheets.values.get({
-    spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'A2:E',
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    const rows = res.data.values;
-    if (rows.length) {
-      console.log('Name, Major:');
-      // Print columns A and E, which correspond to indices 0 and 4.
-      rows.map((row) => {
-        console.log(`${row[0]}, ${row[4]}`);
-      });
-    } else {
-      console.log('No data found.');
-    }
-  });
-}
-
-
-/**
- * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
- * @param {Object} credentials The authorization client credentials.
- * @param {function} callback The callback to call with the authorized client.
- */
-async function authorizeAsync(credentials) {
-    const { client_secret, client_id, redirect_uris } = credentials.installed;
-
-    /*
-    return new Promise((resolve, reject) => {
-            ...
-            resolve(data)
-        })
-    }); */
-
-    return new Promise((resolve, reject) => {
-
-        const oAuth2Client = new google.auth.OAuth2(
-            client_id, client_secret, redirect_uris[0]);
-
-        // Check if we have previously stored a token.
-        fs.readFile(TOKEN_PATH, (err, token) => {
-            if (err) {
-             //   return getNewToken(oAuth2Client, callback);
-            }
-            oAuth2Client.setCredentials(JSON.parse(token));
-            // callback(oAuth2Client);
-            resolve(oAuth2Client)
-        });
-
-    }); 
-
-}
 async function main() {
 
-    /*
-        let content = fs.readFileSync('credentials.json');
-    //        if (err) return console.log('Error loading client secret file:', err);
-            // Authorize a client with credentials, then call the Google Sheets API.
-            //  authorize(JSON.parse(content), listMajors);
-            // authorize(JSON.parse(content), doIt);
-            let token = await authorizeAsync(JSON.parse(content));
-            doIt(token);
-    */
 
     const importer = new GoogleSheets();
     await importer.init();
 
-    //    console.log(importer);
     var id = '13O_4UhOKB6YPybQaoRdhMqopqa0RjG8qXIIyRU7Q890';///edit#gid=1076308066';
     var sheetId = '1076308066';
-    //listMajors(auth);
-    await importer.getRule(id, 'Vacation');
+    var { decisionTable: dtDefinition , tests } = await importer.getRule(id, 'Vacation');
+    console.log(decisionTable);
+    console.log(tests);
+    var { decisionTable, results } = DecisionTable.execute(dtDefinition, tests);
+    console.log(results);
+    results.forEach(record => {
+        console.log(record.input);
+        console.log("Vacation:" + record.actions.Vacation + " for row # " + record.input['__ID']);
+    });
+    const fileName = 'tests\\Vacation.json';
+    //fs.writeFile(fileName , decisionTable.asJson() , function (err) { });
+    decisionTable.save(fileName);
+    const dt2 = DecisionTable.load(fileName);
+    dt2.evaluate(tests[0]);
 
 }
 

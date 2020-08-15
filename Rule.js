@@ -21,7 +21,11 @@ class Rule {
         }
     }
     asJson() {
-        return [this.id, this.conditions, this.actions];
+        const list = [];
+        list.push(this.id);
+        this.conditions.forEach(cond => { list.push(cond.script); });
+        this.actions.forEach(action => { list.push(action.script); });
+        return list;
     }
     compile() {
         this.conditions.forEach(cond => { cond.compile(); });

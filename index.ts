@@ -3,7 +3,7 @@ import { DecisionTable } from './DecisionTable';
 export * from './common';
 export * from './DecisionTable';
 export * from './ExpressionNode';
-export * from './RulesDelegate';
+
 
 export async function WebService(request, response) {
 	console.log(request);

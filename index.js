@@ -24,7 +24,6 @@ const DecisionTable_1 = require("./DecisionTable");
 __exportStar(require("./common"), exports);
 __exportStar(require("./DecisionTable"), exports);
 __exportStar(require("./ExpressionNode"), exports);
-__exportStar(require("./RulesDelegate"), exports);
 function WebService(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(request);

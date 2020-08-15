@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("./common");
 const ExpressionParser_1 = require("./ExpressionParser");
 const ExpressionNode_1 = require("./ExpressionNode");
-const Addins_1 = require("./Addins");
+const Implementor_1 = require("./Implementor");
 const fs = require('fs');
 common_1.Options.debugExecution = true;
 common_1.Options.debugExpression = true;
@@ -427,7 +427,7 @@ function runTest(list, category = '') {
 var errorCmds = [];
 main();
 function main() {
-    console.log(Addins_1.ExecutionContext);
+    console.log(Implementor_1.ExecutionContext);
     console.log(process.argv);
     var args = process.argv;
     if (args.length > 4) {

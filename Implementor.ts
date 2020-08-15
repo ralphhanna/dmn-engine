@@ -30,26 +30,23 @@ export class ExecutionContext extends DefaultImplementor {
 
 }
 
-class ExpressionDate {
-
-    now() { return new Date();}
+export class ExpressionDate {
+    now() { return new Date(); }
 }
-class ExpressionTime {
-
+export class ExpressionTime {
 }
-class ExpressionString {
+export class ExpressionString {
     size(values) { console.log('String.size:', values[0], values[0].length); return values[0].length; }
     /**
      * example:
      *  String.add('Hello,',' World!')   -> returns 'Hello, World!'
-     * 
+     *
      * @param str1
      * @param str2
      */
-    add(values) { return values[0]+ values[1]; }
+    add(values) { return values[0] + values[1]; }
     substr(values) { return values[0].substr(values[1], values[2]); }
-    startsWith(str, check) { return str.startsWith(check);}
+    startsWith(str, check) { return str.startsWith(check); }
     endsWith(str, check) { return str.endsWith(check); }
     contains(str1, check) { return str1.includes(check); }
 }
-

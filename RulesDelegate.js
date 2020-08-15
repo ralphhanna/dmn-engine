@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RulesDelegate = void 0;
-const Addins_1 = require("./Addins");
-class CustomFuntions extends Addins_1.ExecutionContext {
+const Implementor_1 = require("./Implementor");
+class CustomFuntions extends Implementor_1.ExecutionContext {
     fun(params, value, isCondition) {
         return true;
     }

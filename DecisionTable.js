@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DecisionTable = exports.DTVariable = exports.DTOutput = exports.HIT_POLICY = void 0;
 const Rule_1 = require("./Rule");
+const fs = require('fs');
 var HIT_POLICY;
 (function (HIT_POLICY) {
     HIT_POLICY["Unique"] = "Unique";
@@ -54,7 +55,7 @@ class DecisionTable {
         data.forEach(record => {
             response.push(dt.evaluate(record));
         });
-        return response;
+        return { decisionTable: dt, results: response };
     }
     compile() {
         const image = { rules: [] };
@@ -77,12 +78,12 @@ class DecisionTable {
                 console.log(" Rule #" + rule.id + " has returned");
                 output.successCount++;
                 output.rules.push(result);
+                if (!this.processAll)
+                    break;
             }
             else {
                 console.log(" Rule #" + rule.id + " has failed on " + result['failedCondition'] + " condition");
                 output.rules.push(result);
-                if (!this.processAll)
-                    break;
             }
         }
         //console.log(results);
@@ -90,7 +91,6 @@ class DecisionTable {
         //console.log("**No Rule has returned**");
     }
     processResults(output) {
-        console.log(output);
         let operation = (this.hitPolicy == 'Collect+') ? '+' : '';
         output.rules.forEach(result => {
             if (result.output) {
@@ -114,11 +114,23 @@ class DecisionTable {
                 }
             }
         });
+        console.log(output);
         return output;
     }
-    saveAsJson() {
+    save(fileName) {
+        fs.writeFileSync(fileName, this.asJson(), function (err) { });
+    }
+    static load(fileName) {
+        const json = fs.readFileSync(fileName, { encoding: 'utf8', flag: 'r' });
+        console.log(json);
+        return new DecisionTable(JSON.parse(json));
+    }
+    asJson() {
         const rules = [];
-        this.rules.forEach(rule => { rules.push(rule.asJson()); });
+        this.rules.forEach(rule => {
+            console.log(rule.asJson());
+            rules.push(rule.asJson());
+        });
         const obj = {
             name: this.name,
             hitPolicy: this.hitPolicy,
@@ -126,6 +138,7 @@ class DecisionTable {
             actionVars: this.actionVars,
             rules: rules
         };
+        console.log(obj);
         return JSON.stringify(obj, null, 2);
     }
 }

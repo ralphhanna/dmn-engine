@@ -2,7 +2,7 @@
 import { logger, debug, TOKEN_GROUP, EXPRESSION_TYPE, Options } from './common';
 
 import { Parser } from './ExpressionParser';
-import { ExpressionEngine } from './ExpressionEngine';
+
 
 testRegex();
 function testRegex() {
