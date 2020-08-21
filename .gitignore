@@ -8,5 +8,6 @@
 *.txt
 *.txt.errors
 /bin
+/'.vs'
 /jison
 token.json
