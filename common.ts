@@ -1,41 +1,13 @@
 
-import { RulesDelegate } from './RulesDelegate';
 const FS = require('fs');
-
-export enum TOKEN_GROUP {
-    alpha = 'alpha',
-    number = 'number',
-    symbol = 'symbol',
-    space = 'space',
-}
-
-//  Text    words without quote
-//  string  quoted string
-//  Number  numeric values
-
-export enum EXPRESSION_TYPE {
-    Root = 'Root',
-    Single = 'Single',
-    Literal = 'Literal', // Literal	(quoted)
-    Number = 'Number', 
-    Text = 'Text',
-    Binary = 'Binary',
-    Operator = 'Operator',
-    Bracket = 'Bracket',
-    Group = 'Group',
-    Call= 'Call',
-    Token = '',
-    AlwaysTrue ='True'
-}
 
 export class Options {
     static debugTokens = false;
-    static debugExpression = false;
+    static debugExpression = true;
     static debugExecution = false;
     static debugTree = false;
     static delegate;
 }
-Options.delegate = new RulesDelegate();
 
 export function debug(type, title, obj = null) {
 

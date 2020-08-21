@@ -1,17 +1,16 @@
 import { DecisionTable } from './DecisionTable';
-
+import { Condition,Expression } from './Expression';
 export * from './common';
-export * from './DecisionTable';
-export * from './ExpressionNode';
 
-
-export async function WebService(request, response) {
-	console.log(request);
-	console.log(response);
-	let { definition, data, options, loadFrom } = request.body;
-	response.json(Execute(request.body));
+export async function ExecuteCondition(script, variable, context) {
+	const cond = new Condition(script, variable);
+	return await cond.evaluate(context);
 }
-export function Execute(
+export async function ExecuteExpression(script,context) {
+	const expr = new Expression(script);
+	return await expr.evaluate(context);
+}
+export function ExecuteDecisionTable(
 	{ definition,
 		data,
 		options,

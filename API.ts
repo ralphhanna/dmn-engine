@@ -1,4 +1,4 @@
-import { Expression , Condition } from "./ExpressionNode";
+import { Expression , Condition } from "./Expression";
 import { DecisionTable, HIT_POLICY } from "./DecisionTable";
 
 api();

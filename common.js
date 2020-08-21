@@ -9,42 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logger = exports.Logger = exports.debug = exports.Options = exports.EXPRESSION_TYPE = exports.TOKEN_GROUP = void 0;
-const RulesDelegate_1 = require("./RulesDelegate");
+exports.logger = exports.Logger = exports.debug = exports.Options = void 0;
 const FS = require('fs');
-var TOKEN_GROUP;
-(function (TOKEN_GROUP) {
-    TOKEN_GROUP["alpha"] = "alpha";
-    TOKEN_GROUP["number"] = "number";
-    TOKEN_GROUP["symbol"] = "symbol";
-    TOKEN_GROUP["space"] = "space";
-})(TOKEN_GROUP = exports.TOKEN_GROUP || (exports.TOKEN_GROUP = {}));
-//  Text    words without quote
-//  string  quoted string
-//  Number  numeric values
-var EXPRESSION_TYPE;
-(function (EXPRESSION_TYPE) {
-    EXPRESSION_TYPE["Root"] = "Root";
-    EXPRESSION_TYPE["Single"] = "Single";
-    EXPRESSION_TYPE["Literal"] = "Literal";
-    EXPRESSION_TYPE["Number"] = "Number";
-    EXPRESSION_TYPE["Text"] = "Text";
-    EXPRESSION_TYPE["Binary"] = "Binary";
-    EXPRESSION_TYPE["Operator"] = "Operator";
-    EXPRESSION_TYPE["Bracket"] = "Bracket";
-    EXPRESSION_TYPE["Group"] = "Group";
-    EXPRESSION_TYPE["Call"] = "Call";
-    EXPRESSION_TYPE["Token"] = "";
-    EXPRESSION_TYPE["AlwaysTrue"] = "True";
-})(EXPRESSION_TYPE = exports.EXPRESSION_TYPE || (exports.EXPRESSION_TYPE = {}));
 class Options {
 }
 exports.Options = Options;
 Options.debugTokens = false;
-Options.debugExpression = false;
+Options.debugExpression = true;
 Options.debugExecution = false;
 Options.debugTree = false;
-Options.delegate = new RulesDelegate_1.RulesDelegate();
 function debug(type, title, obj = null) {
     exports.logger.log(title);
     if (type == 'execution' && !Options.debugExecution)

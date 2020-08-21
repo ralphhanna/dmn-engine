@@ -754,21 +754,31 @@
       "3---->Bracket        #11  (                                 ",
       "4----->Literal       #12  a                                 result=<a>   "
     ],
-    "newTree": [],
+    "newTree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #9   and                               result=<true>   ",
+      "2--->Bracket         #1   (                                 result=<true>   ",
+      "3---->Call           #2   in                                result=<true>   ",
+      "4----->Bracket       #3   (                                 ",
+      "5------>Literal      #4   abc                               result=<abc>   ",
+      "5------>Operator     #5   ,                                 ",
+      "5------>Literal      #6   xyz-abc                           result=<xyz-abc>   ",
+      "2--->Call            #10  startsWith                        result=<true>   ",
+      "3---->Bracket        #11  (                                 ",
+      "4----->Literal       #12  a                                 result=<a>   "
+    ],
     "tests": [
       "'abc', true    "
     ],
-    "errors": [
-      "***Error -(in (abc,'xyz-abc') ) and startsWith('a') for abc result: false expecting:<true>"
-    ],
+    "errors": [],
     "type": "Condition",
     "comments": [
       ""
     ],
-    "expr": "(in (abc,'xyz-abc') ) and startsWith('a')",
+    "expr": "(in ('abc','xyz-abc') ) and startsWith('a')",
     "mask": "#aa #aaa##aaa#aaa## # aaa aaaaaaaaaa##a##",
-    "newMask": "#aa #aaa##aaa#aaa## # aaa aaaaaaaaaa##a##",
-    "maskDiff": ""
+    "newMask": "#aa ##aaa###aaa#aaa## # aaa aaaaaaaaaa##a##",
+    "maskDiff": "     X  X XX X X XXX  XX X X        XXX XXX"
   },
   {
     "tree": [
@@ -783,21 +793,30 @@
       "3---->Bracket        #9   (                                 ",
       "4----->Literal       #10  a                                 result=<a>   "
     ],
-    "newTree": [],
+    "newTree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #7   and                               result=<true>   ",
+      "2--->Call            #1   in                                result=<true>   ",
+      "3---->Bracket        #2   (                                 ",
+      "4----->Literal       #3   abc                               result=<abc>   ",
+      "4----->Operator      #4   ,                                 ",
+      "4----->Literal       #5   xyz-abc                           result=<xyz-abc>   ",
+      "2--->Call            #8   startsWith                        result=<true>   ",
+      "3---->Bracket        #9   (                                 ",
+      "4----->Literal       #10  a                                 result=<a>   "
+    ],
     "tests": [
       "'abc', true    "
     ],
-    "errors": [
-      "***Error -in (abc,'xyz-abc') and startsWith('a') for abc result: false expecting:<true>"
-    ],
+    "errors": [],
     "type": "Condition",
     "comments": [
       ""
     ],
-    "expr": "in (abc,'xyz-abc') and startsWith('a')",
+    "expr": "in ('abc','xyz-abc') and startsWith('a')",
     "mask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a##",
-    "newMask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a##",
-    "maskDiff": ""
+    "newMask": "aa ##aaa###aaa#aaa## aaa aaaaaaaaaa##a##",
+    "maskDiff": "    X  X XX X X XXXXX X X        XXX XXX"
   },
   {
     "tree": [
@@ -865,24 +884,6 @@
   },
   {
     "tree": [
-      "0->Root              #0                                     ",
-      "1-->Text             #1   undefined                         "
-    ],
-    "newTree": [],
-    "tests": [
-      "'-20', true"
-    ],
-    "errors": [
-      "***Error -undefined for -20 result: false expecting:<true>"
-    ],
-    "type": "Condition",
-    "comments": [],
-    "newMask": "aaaaaaaaa",
-    "maskDiff": "",
-    "mask": "aaaaaaaaa"
-  },
-  {
-    "tree": [
       "0->Root              #0                                     result=<true>   ",
       "1-->Operator         #1   >=                                result=<true>   ",
       "2--->Literal         #2   75                                "
@@ -899,7 +900,6 @@
     "errors": [],
     "type": "Condition",
     "comments": [
-      "",
       "",
       "",
       ""
@@ -1105,20 +1105,32 @@
       "4----->Operator      #5   ,                                 ",
       "4----->Literal       #6   xyz-abc                           result=<xyz-abc>   "
     ],
-    "newTree": [],
+    "newTree": [
+      "0->Root              #0                                     ",
+      "1-->Binary           #1   not                               ",
+      "2--->Text            #8   $$VALUE                           result=<axbc>   ",
+      "2--->Call            #2   in                                ",
+      "3---->Bracket        #3   (                                 ",
+      "4----->Literal       #4   abc                               result=<abc>   ",
+      "4----->Operator      #5   ,                                 ",
+      "4----->Literal       #6   xyz-abc                           result=<xyz-abc>   "
+    ],
     "tests": [
       "'abc', false",
       "'axbc', true"
     ],
     "errors": [
-      "***Error -not in (abc,'xyz-abc')  for axbc result: false expecting:<true>"
+      "***Error -not in ('abc','xyz-abc')  for axbc result: false expecting:<true>"
     ],
     "type": "Condition",
-    "comments": [],
-    "expr": "not in (abc,'xyz-abc') ",
+    "comments": [
+      "",
+      ""
+    ],
+    "expr": "not in ('abc','xyz-abc') ",
     "mask": "aaa aa #aaa##aaa#aaa## ",
-    "newMask": "aaa aa #aaa##aaa#aaa## ",
-    "maskDiff": ""
+    "newMask": "aaa aa ##aaa###aaa#aaa## ",
+    "maskDiff": "        X  X XX X X XXXXX"
   },
   {
     "tree": [
@@ -1133,22 +1145,31 @@
       "3---->Bracket        #9   (                                 ",
       "4----->Literal       #10  a                                 result=<a>   "
     ],
-    "newTree": [],
+    "newTree": [
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #7   and                               result=<true>   ",
+      "2--->Call            #1   in                                result=<true>   ",
+      "3---->Bracket        #2   (                                 ",
+      "4----->Literal       #3   abc                               result=<abc>   ",
+      "4----->Operator      #4   ,                                 ",
+      "4----->Literal       #5   xyz-abc                           result=<xyz-abc>   ",
+      "2--->Call            #8   startsWith                        result=<true>   ",
+      "3---->Bracket        #9   (                                 ",
+      "4----->Literal       #10  a                                 result=<a>   "
+    ],
     "tests": [
       "'abc', true   "
     ],
-    "errors": [
-      "***Error -in (abc,'xyz-abc') and startsWith('a')  for abc result: false expecting:<true>"
-    ],
+    "errors": [],
     "type": "Condition",
     "comments": [
       "",
       ""
     ],
-    "expr": "in (abc,'xyz-abc') and startsWith('a') ",
+    "expr": "in ('abc','xyz-abc') and startsWith('a') ",
     "mask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a## ",
-    "newMask": "aa #aaa##aaa#aaa## aaa aaaaaaaaaa##a## ",
-    "maskDiff": ""
+    "newMask": "aa ##aaa###aaa#aaa## aaa aaaaaaaaaa##a## ",
+    "maskDiff": "    X  X XX X X XXXXX X X        XXX XXXX"
   },
   {
     "tree": [],
@@ -1285,7 +1306,7 @@
       "2--->Bracket         #2   (                                 ",
       "3---->Number         #3   95                                result=<95>   ",
       "3---->Operator       #4   ,                                 ",
-      "3---->Number         #5   2500.0                            result=<2500.0>   "
+      "3---->Number         #5   2500.0                            result=<2500>   "
     ],
     "tests": [
       "200, true"

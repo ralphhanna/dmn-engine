@@ -36,13 +36,13 @@
     [
       "9",
       ">10",
-      "in ('Employee','Executive')",
+      "\"Employee\",\"Executive\"",
       "1"
     ],
     [
       "10",
       ">20",
-      "in ('Employee','Executive')",
+      "\"Employee\",\"Executive\"",
       "1"
     ]
   ]

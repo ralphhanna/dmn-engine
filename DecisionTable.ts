@@ -1,5 +1,3 @@
-import { EXPRESSION_TYPE } from "./common";
-import { Expression, Condition } from './ExpressionNode';
 import { Rule } from "./Rule";
 const fs = require('fs');
 
@@ -57,12 +55,14 @@ export class DecisionTable {
      * @param dtDefinition
      * @param data
      */
-    static execute(dtDefinition, data) {
+    static async execute(dtDefinition, data) {
         const dt = new DecisionTable(dtDefinition);
         const response = [];
-        data.forEach(record => {
-            response.push(dt.evaluate(record));
-        });
+        let i;
+        for (i = 0; i < data.length; i++) {
+            const record = data[i];
+            response.push(await dt.evaluate(record));
+        }
         return { decisionTable: dt, results: response };
     }
     compile() {
@@ -72,7 +72,7 @@ export class DecisionTable {
         });
         return image;
     }
-    evaluate(data) {
+    async evaluate(data) {
         const output = new DTOutput(); //= { _results: [], _success: 0 };
         var r = 0;
         output.input = data;
@@ -81,35 +81,37 @@ export class DecisionTable {
         for (r = 0; r < rules.length; r++) {
             let rule = rules[r];
             const result = { ruleId: rule.id };
-            ret = rule.evaluate(data, result);
+            ret = await rule.evaluate(data, result);
             if (ret) {
-                console.log(" Rule #" + rule.id + " has returned");
+//                console.log(" Rule #" + rule.id + " has returned");
                 output.successCount++;
                 output.rules.push(result);
                 if (!this.processAll)
                     break;
             }
             else {
-                console.log(" Rule #" + rule.id + " has failed on " + result['failedCondition'] +" condition");
+//                console.log(" Rule #" + rule.id + " has failed on " + result['failedCondition'] +" condition");
                 output.rules.push(result);
             }
         }
         //console.log(results);
-        return this.processResults(output);
+        return await this.processResults(output);
         //console.log("**No Rule has returned**");
 
     }
     private processResults(output) {
-        let operation = (this.hitPolicy =='Collect+')?'+':'';
-        output.rules.forEach(result => {
+        let operation = (this.hitPolicy == 'Collect+') ? '+' : '';
+        let i;
+        for (i = 0; i < output.rules.length; i++) {
+            const result = output.rules[i];
             if (result.output) {
-                console.log("output:");
-                console.log(result.output)
+//                console.log("output:");
+//                console.log(result.output)
 
                 this.actionVars.forEach(action => {
                     switch (operation) {
                         case '':
-                            output[action.name] = result.output[action.name];
+                            output.actions[action.name] = result.output[action.name];
                             break;
                         case '+':
                             if (output.actions[action.name])
@@ -124,8 +126,9 @@ export class DecisionTable {
                     return output;
                 }
             }
-        });
-        console.log(output);
+
+        }
+//        console.log(output);
         return output;
     }
     save(fileName) {
@@ -136,14 +139,14 @@ export class DecisionTable {
         const json= fs.readFileSync(fileName,
             { encoding: 'utf8', flag: 'r' });
 
-        console.log(json);
+//        console.log(json);
         return new DecisionTable(JSON.parse(json));
 
     }
     asJson() {
         const rules=[];
         this.rules.forEach(rule => {
-            console.log(rule.asJson());
+//            console.log(rule.asJson());
             rules.push(rule.asJson());
         });
         const obj = {
@@ -153,7 +156,7 @@ export class DecisionTable {
             actionVars: this.actionVars,
             rules: rules
         };
-        console.log(obj);
+//        console.log(obj);
         return JSON.stringify(obj, null, 2);
     }
 }

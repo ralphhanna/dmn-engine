@@ -36,14 +36,14 @@ export declare class DecisionTable {
      * @param dtDefinition
      * @param data
      */
-    static execute(dtDefinition: any, data: any): {
+    static execute(dtDefinition: any, data: any): Promise<{
         decisionTable: DecisionTable;
         results: any[];
-    };
+    }>;
     compile(): {
         rules: any[];
     };
-    evaluate(data: any): any;
+    evaluate(data: any): Promise<any>;
     private processResults;
     save(fileName: any): void;
     static load(fileName: any): DecisionTable;

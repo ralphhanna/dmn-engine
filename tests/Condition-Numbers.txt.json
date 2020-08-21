@@ -23,9 +23,9 @@
       ""
     ],
     "expr": "(4 + 3 - 1) * 10 ^2",
+    "mask": "#N # N # N# # NN #N",
     "newMask": "#N # N # N# # NN #N",
-    "maskDiff": "",
-    "mask": "#N # N # N# # NN #N"
+    "maskDiff": ""
   },
   {
     "tree": [
@@ -48,9 +48,9 @@
       ""
     ],
     "expr": "4 + 3 - 1 * 10 ^2",
+    "mask": "N # N # N # NN #N",
     "newMask": "N # N # N # NN #N",
-    "maskDiff": "",
-    "mask": "N # N # N # NN #N"
+    "maskDiff": ""
   },
   {
     "tree": [
@@ -1001,7 +1001,7 @@
       "2--->Bracket         #2   (                                 ",
       "3---->Number         #3   95                                result=<95>   ",
       "3---->Operator       #4   ,                                 ",
-      "3---->Number         #5   2500.0                            result=<2500.0>   "
+      "3---->Number         #5   2500.0                            result=<2500>   "
     ],
     "tests": [
       "200, true"

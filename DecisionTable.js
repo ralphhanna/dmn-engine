@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DecisionTable = exports.DTVariable = exports.DTOutput = exports.HIT_POLICY = void 0;
 const Rule_1 = require("./Rule");
@@ -50,12 +59,16 @@ class DecisionTable {
      * @param data
      */
     static execute(dtDefinition, data) {
-        const dt = new DecisionTable(dtDefinition);
-        const response = [];
-        data.forEach(record => {
-            response.push(dt.evaluate(record));
+        return __awaiter(this, void 0, void 0, function* () {
+            const dt = new DecisionTable(dtDefinition);
+            const response = [];
+            let i;
+            for (i = 0; i < data.length; i++) {
+                const record = data[i];
+                response.push(yield dt.evaluate(record));
+            }
+            return { decisionTable: dt, results: response };
         });
-        return { decisionTable: dt, results: response };
     }
     compile() {
         const image = { rules: [] };
@@ -65,41 +78,45 @@ class DecisionTable {
         return image;
     }
     evaluate(data) {
-        const output = new DTOutput(); //= { _results: [], _success: 0 };
-        var r = 0;
-        output.input = data;
-        const rules = this.rules;
-        let ret;
-        for (r = 0; r < rules.length; r++) {
-            let rule = rules[r];
-            const result = { ruleId: rule.id };
-            ret = rule.evaluate(data, result);
-            if (ret) {
-                console.log(" Rule #" + rule.id + " has returned");
-                output.successCount++;
-                output.rules.push(result);
-                if (!this.processAll)
-                    break;
+        return __awaiter(this, void 0, void 0, function* () {
+            const output = new DTOutput(); //= { _results: [], _success: 0 };
+            var r = 0;
+            output.input = data;
+            const rules = this.rules;
+            let ret;
+            for (r = 0; r < rules.length; r++) {
+                let rule = rules[r];
+                const result = { ruleId: rule.id };
+                ret = yield rule.evaluate(data, result);
+                if (ret) {
+                    //                console.log(" Rule #" + rule.id + " has returned");
+                    output.successCount++;
+                    output.rules.push(result);
+                    if (!this.processAll)
+                        break;
+                }
+                else {
+                    //                console.log(" Rule #" + rule.id + " has failed on " + result['failedCondition'] +" condition");
+                    output.rules.push(result);
+                }
             }
-            else {
-                console.log(" Rule #" + rule.id + " has failed on " + result['failedCondition'] + " condition");
-                output.rules.push(result);
-            }
-        }
-        //console.log(results);
-        return this.processResults(output);
-        //console.log("**No Rule has returned**");
+            //console.log(results);
+            return yield this.processResults(output);
+            //console.log("**No Rule has returned**");
+        });
     }
     processResults(output) {
         let operation = (this.hitPolicy == 'Collect+') ? '+' : '';
-        output.rules.forEach(result => {
+        let i;
+        for (i = 0; i < output.rules.length; i++) {
+            const result = output.rules[i];
             if (result.output) {
-                console.log("output:");
-                console.log(result.output);
+                //                console.log("output:");
+                //                console.log(result.output)
                 this.actionVars.forEach(action => {
                     switch (operation) {
                         case '':
-                            output[action.name] = result.output[action.name];
+                            output.actions[action.name] = result.output[action.name];
                             break;
                         case '+':
                             if (output.actions[action.name])
@@ -113,8 +130,8 @@ class DecisionTable {
                     return output;
                 }
             }
-        });
-        console.log(output);
+        }
+        //        console.log(output);
         return output;
     }
     save(fileName) {
@@ -122,13 +139,13 @@ class DecisionTable {
     }
     static load(fileName) {
         const json = fs.readFileSync(fileName, { encoding: 'utf8', flag: 'r' });
-        console.log(json);
+        //        console.log(json);
         return new DecisionTable(JSON.parse(json));
     }
     asJson() {
         const rules = [];
         this.rules.forEach(rule => {
-            console.log(rule.asJson());
+            //            console.log(rule.asJson());
             rules.push(rule.asJson());
         });
         const obj = {
@@ -138,7 +155,7 @@ class DecisionTable {
             actionVars: this.actionVars,
             rules: rules
         };
-        console.log(obj);
+        //        console.log(obj);
         return JSON.stringify(obj, null, 2);
     }
 }

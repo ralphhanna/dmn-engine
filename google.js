@@ -13,7 +13,6 @@ exports.GoogleSheets = void 0;
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
-const DecisionTable_1 = require("./DecisionTable");
 /*
  * Decison	Vaction Allowance	Hit Policy	Collect+
 Variables	Input	Input	Output	Annotation
@@ -39,10 +38,10 @@ class CSVReader {
         let r = 1;
         let mode = '';
         rows.forEach(row => {
-            console.log(row);
+            //            console.log(row)
             if (row.length > 0) {
                 const title = row[0];
-                console.log('row ' + r + " " + title + " mode: " + mode);
+                //                console.log('row ' + r + " " + title + " mode: " + mode);
                 switch (title) {
                     case 'Decision':
                         for (c = 1; c < row.length; c++) {
@@ -138,7 +137,7 @@ class GoogleSheets {
     getRule(spreadsheetId, range) {
         return __awaiter(this, void 0, void 0, function* () {
             const rows = yield this.getData(spreadsheetId, range);
-            console.log(rows);
+            //        console.log(rows);
             return CSVReader.parseRule(rows);
         });
     }
@@ -157,7 +156,7 @@ class GoogleSheets {
                     resolve(rows);
                     let r = 1;
                     if (rows.length) {
-                        console.log('Range:' + range);
+                        //                    console.log('Range:' + range);
                         // Print columns A and E, which correspond to indices 0 and 4.
                         rows.map((row) => {
                             //                    console.log('Row: ', r++, row);
@@ -218,27 +217,4 @@ fs.readFile('credentials.json', (err, content) => {
   
 });
 */
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const importer = new GoogleSheets();
-        yield importer.init();
-        var id = '13O_4UhOKB6YPybQaoRdhMqopqa0RjG8qXIIyRU7Q890'; ///edit#gid=1076308066';
-        var sheetId = '1076308066';
-        var { decisionTable: dtDefinition, tests } = yield importer.getRule(id, 'Vacation');
-        console.log(decisionTable);
-        console.log(tests);
-        var { decisionTable, results } = DecisionTable_1.DecisionTable.execute(dtDefinition, tests);
-        console.log(results);
-        results.forEach(record => {
-            console.log(record.input);
-            console.log("Vacation:" + record.actions.Vacation + " for row # " + record.input['__ID']);
-        });
-        const fileName = 'tests\\Vacation.json';
-        //fs.writeFile(fileName , decisionTable.asJson() , function (err) { });
-        decisionTable.save(fileName);
-        const dt2 = DecisionTable_1.DecisionTable.load(fileName);
-        dt2.evaluate(tests[0]);
-    });
-}
-main();
 //# sourceMappingURL=google.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ExpressionNode_1 = require("./ExpressionNode");
+const Expression_1 = require("./Expression");
 const DecisionTable_1 = require("./DecisionTable");
 api();
 function api() {
     const context = { name: 'John', job: 'Analyst', salary: 50000 };
     let exprResult, condResult, ruleOutput, dtOutput;
-    const expr = new ExpressionNode_1.Expression(`salary* 1.05`);
+    const expr = new Expression_1.Expression(`salary* 1.05`);
     console.log(expr.evaluate(context));
-    const cond = new ExpressionNode_1.Condition(`>40000`, 'salary');
+    const cond = new Expression_1.Condition(`>40000`, 'salary');
     console.log(cond.evaluate(context));
     const decisionTable = new DecisionTable_1.DecisionTable({
         name: 'Raise',

@@ -1,23 +1,3 @@
-export declare enum TOKEN_GROUP {
-    alpha = "alpha",
-    number = "number",
-    symbol = "symbol",
-    space = "space"
-}
-export declare enum EXPRESSION_TYPE {
-    Root = "Root",
-    Single = "Single",
-    Literal = "Literal",
-    Number = "Number",
-    Text = "Text",
-    Binary = "Binary",
-    Operator = "Operator",
-    Bracket = "Bracket",
-    Group = "Group",
-    Call = "Call",
-    Token = "",
-    AlwaysTrue = "True"
-}
 export declare class Options {
     static debugTokens: boolean;
     static debugExpression: boolean;

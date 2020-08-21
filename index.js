@@ -19,21 +19,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Execute = exports.WebService = void 0;
+exports.ExecuteDecisionTable = exports.ExecuteExpression = exports.ExecuteCondition = void 0;
 const DecisionTable_1 = require("./DecisionTable");
+const Expression_1 = require("./Expression");
 __exportStar(require("./common"), exports);
-__exportStar(require("./DecisionTable"), exports);
-__exportStar(require("./ExpressionNode"), exports);
-function WebService(request, response) {
+function ExecuteCondition(script, variable, context) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(request);
-        console.log(response);
-        let { definition, data, options, loadFrom } = request.body;
-        response.json(Execute(request.body));
+        const cond = new Expression_1.Condition(script, variable);
+        return yield cond.evaluate(context);
     });
 }
-exports.WebService = WebService;
-function Execute({ definition, data, options, loadFrom }) {
+exports.ExecuteCondition = ExecuteCondition;
+function ExecuteExpression(script, context) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const expr = new Expression_1.Expression(script);
+        return yield expr.evaluate(context);
+    });
+}
+exports.ExecuteExpression = ExecuteExpression;
+function ExecuteDecisionTable({ definition, data, options, loadFrom }) {
     console.log(definition);
     console.log(data);
     console.log(options);
@@ -42,5 +46,5 @@ function Execute({ definition, data, options, loadFrom }) {
     const res = dt.evaluate(data);
     return res;
 }
-exports.Execute = Execute;
+exports.ExecuteDecisionTable = ExecuteDecisionTable;
 //# sourceMappingURL=index.js.map

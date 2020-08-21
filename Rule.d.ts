@@ -1,4 +1,4 @@
-import { Expression, Condition } from './ExpressionNode';
+import { Expression, Condition } from './Expression';
 import { DTVariable } from './DecisionTable';
 export declare class Rule {
     id: any;
@@ -9,5 +9,5 @@ export declare class Rule {
     constructor(id: any, conditions: string[], actions: string[], conditionVars: DTVariable[], actionVars: DTVariable[]);
     asJson(): any[];
     compile(): any;
-    evaluate(data: any, result: any): boolean;
+    evaluate(data: any, result: any): Promise<boolean>;
 }

@@ -16,12 +16,12 @@
     "newTree": [
       "0->Root              #0                                     ",
       "1-->Bracket          #1   (                                 ",
-      "2--->Text            #2   in                                ",
-      "1-->Bracket          #3   (                                 ",
-      "2--->Literal         #4   abc                               ",
-      "2--->Operator        #5   ,                                 ",
       "2--->Binary          #8   and                               ",
-      "3---->Literal        #6   xyz-abc                           ",
+      "3---->Call           #2   in                                ",
+      "4----->Bracket       #3   (                                 ",
+      "5------>Literal      #4   abc                               ",
+      "5------>Operator     #5   ,                                 ",
+      "5------>Literal      #6   xyz-   abc                        ",
       "3---->Number         #9   2                                 ",
       "2--->Operator        #10  >                                 ",
       "3---->Text           #13  $$VALUE                           ",
@@ -35,10 +35,10 @@
       "",
       ""
     ],
-    "expr": "(in ('abc','xyz-abc') and 2 > 1 )",
+    "expr": "(in ('abc','xyz-   abc') and 2 > 1 )",
     "mask": "#aa #aaa##aaa#aaa## aaa N # N #",
-    "newMask": "#aa ##aaa###aaa#aaa## aaa N # N #",
-    "maskDiff": "     X  X XX X X XXXXX XX X X XXX"
+    "newMask": "#aa ##aaa###aaa#   aaa## aaa N # N #",
+    "maskDiff": "     X  X XX X XXXXX  XXXXXXXXXXXXXX"
   },
   {
     "tree": [
@@ -82,12 +82,12 @@
     "newTree": [
       "0->Root              #0                                     ",
       "1-->Bracket          #1   (                                 ",
-      "2--->Text            #2   in                                ",
-      "1-->Bracket          #3   (                                 ",
-      "2--->Text            #4   abc                               ",
-      "2--->Operator        #5   ,                                 ",
       "2--->Binary          #8   and                               ",
-      "3---->Literal        #6   xyz-abc                           ",
+      "3---->Call           #2   in                                ",
+      "4----->Bracket       #3   (                                 ",
+      "5------>Text         #4   abc                               ",
+      "5------>Operator     #5   ,                                 ",
+      "5------>Literal      #6   xyz-abc                           ",
       "3---->Operator       #9   >                                 ",
       "4----->Text          #12  $$VALUE                           ",
       "4----->Number        #10  1                                 "
@@ -244,24 +244,22 @@
       "4----->Literal       #12  a                                 "
     ],
     "newTree": [
-      "0->Root              #0                                     ",
-      "1-->Bracket          #1   (                                 ",
-      "2--->Text            #2   in                                ",
-      "1-->Binary           #9   and                               ",
-      "2--->Bracket         #3   (                                 ",
-      "3---->Literal        #4   abc                               ",
-      "3---->Operator       #5   ,                                 ",
-      "3---->Literal        #6   xyz-abc                           ",
-      "2--->Call            #10  startsWith                        ",
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #9   and                               result=<true>   ",
+      "2--->Bracket         #1   (                                 result=<true>   ",
+      "3---->Call           #2   in                                result=<true>   ",
+      "4----->Bracket       #3   (                                 ",
+      "5------>Literal      #4   abc                               result=<abc>   ",
+      "5------>Operator     #5   ,                                 ",
+      "5------>Literal      #6   xyz-abc                           result=<xyz-abc>   ",
+      "2--->Call            #10  startsWith                        result=<true>   ",
       "3---->Bracket        #11  (                                 ",
-      "4----->Literal       #12  a                                 "
+      "4----->Literal       #12  a                                 result=<a>   "
     ],
     "tests": [
       "'abc', true    "
     ],
-    "errors": [
-      "***Error -(in ('abc','xyz-abc') ) and startsWith('a') for abc result: false expecting:<true>"
-    ],
+    "errors": [],
     "type": "Condition",
     "comments": [
       "",
@@ -329,24 +327,22 @@
       "4----->Literal       #12  a                                 result=<a>   "
     ],
     "newTree": [
-      "0->Root              #0                                     ",
-      "1-->Bracket          #1   (                                 ",
-      "2--->Text            #2   in                                ",
-      "1-->Binary           #9   and                               ",
-      "2--->Bracket         #3   (                                 ",
-      "3---->Literal        #4   abc                               ",
-      "3---->Operator       #5   ,                                 ",
-      "3---->Literal        #6   xyz-abc                           ",
-      "2--->Call            #10  startsWith                        ",
+      "0->Root              #0                                     result=<true>   ",
+      "1-->Binary           #9   and                               result=<true>   ",
+      "2--->Bracket         #1   (                                 result=<true>   ",
+      "3---->Call           #2   in                                result=<true>   ",
+      "4----->Bracket       #3   (                                 ",
+      "5------>Literal      #4   abc                               result=<abc>   ",
+      "5------>Operator     #5   ,                                 ",
+      "5------>Literal      #6   xyz-abc                           result=<xyz-abc>   ",
+      "2--->Call            #10  startsWith                        result=<true>   ",
       "3---->Bracket        #11  (                                 ",
-      "4----->Literal       #12  a                                 "
+      "4----->Literal       #12  a                                 result=<a>   "
     ],
     "tests": [
       "'abc', true    "
     ],
-    "errors": [
-      "***Error -(in ('abc','xyz-abc') ) and startsWith('a') for abc result: false expecting:<true>"
-    ],
+    "errors": [],
     "type": "Condition",
     "comments": [
       "",

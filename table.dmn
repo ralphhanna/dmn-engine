@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="definitions" name="definitions"
+             namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="decision" name="Life Insurance">
+    <decisionTable id="decisionTable">
+      <input id="input1" label="Years OfService">
+        <inputExpression id="inputExpression1" typeRef="string" />
+      </input>
+      <input id="InputClause_0pn490p" label="Employeetype">
+        <inputExpression id="LiteralExpression_0yzt8xf" typeRef="string" />
+      </input>
+      <input id="InputClause_01h67x6" label="Salary">
+        <inputExpression id="LiteralExpression_0a1k15o" typeRef="string" />
+      </input>
+      <output id="output1" label="LifeInsurance" name="" typeRef="string" />
+      <rule id="row-348362835-1">
+        <inputEntry id="UnaryTests_1vpqcr4">        <text></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_00vnamv">        <text><![CDATA["Contract"]]></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_0paa8ld">        <text></text>
+</inputEntry>
+        <outputEntry id="LiteralExpression_0pkhj6v">        <text><![CDATA["0"]]></text>
+</outputEntry>
+      </rule>
+      <rule id="row-348362835-2">
+        <description></description>
+        <inputEntry id="UnaryTests_0xg8vcd">        <text></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_17cjtvh">        <text><![CDATA["Executive"]]></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_1wx9v2k">        <text></text>
+</inputEntry>
+        <outputEntry id="LiteralExpression_0svt94p">        <text><![CDATA["Salary*2.5"]]></text>
+</outputEntry>
+      </rule>
+      <rule id="row-348362835-3">
+        <inputEntry id="UnaryTests_1kiaaq3">        <text></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_1iq25mi">        <text><![CDATA["Employee"]]></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_1obkley">        <text></text>
+</inputEntry>
+        <outputEntry id="LiteralExpression_0auo3bz">        <text><![CDATA["100,000"]]></text>
+</outputEntry>
+      </rule>
+      <rule id="row-348362835-4">
+        <inputEntry id="UnaryTests_12uf1vf">        <text><![CDATA[">10"]]></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_1lyufjo">        <text><![CDATA["Employee", "Executive"]]></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_0vy6vbl">        <text></text>
+</inputEntry>
+        <outputEntry id="LiteralExpression_1ycwitv">        <text><![CDATA["50,000"]]></text>
+</outputEntry>
+      </rule>
+      <rule id="row-348362835-5">
+        <inputEntry id="UnaryTests_0uk0i5o">        <text><![CDATA[">10"]]></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_1p9w336">        <text><![CDATA["Employee", "Executive"]]></text>
+</inputEntry>
+        <inputEntry id="UnaryTests_0owd78a">        <text></text>
+</inputEntry>
+        <outputEntry id="LiteralExpression_1n201yg">        <text><![CDATA["50,000"]]></text>
+</outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

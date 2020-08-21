@@ -1,10 +1,9 @@
 export * from './common';
-export * from './DecisionTable';
-export * from './ExpressionNode';
-export declare function WebService(request: any, response: any): Promise<void>;
-export declare function Execute({ definition, data, options, loadFrom }: {
+export declare function ExecuteCondition(script: any, variable: any, context: any): Promise<any>;
+export declare function ExecuteExpression(script: any, context: any): Promise<any>;
+export declare function ExecuteDecisionTable({ definition, data, options, loadFrom }: {
     definition: any;
     data: any;
     options: any;
     loadFrom: any;
-}): any;
+}): Promise<any>;

@@ -1,5 +1,4 @@
-import { EXPRESSION_TYPE } from "./common";
-import { Expression, Condition } from './ExpressionNode';
+import { Expression, Condition } from './Expression';
 import { DecisionTable, DTVariable} from './DecisionTable';
 
 
@@ -40,7 +39,7 @@ export class Rule {
 
         return null;
     }
-    evaluate(data, result) {
+    async evaluate(data, result) {
         let values = data;
         var allTrue = true;
         var c;
@@ -49,15 +48,15 @@ export class Rule {
             const cond:Condition = this.conditions[c];
             const varName = cond.variableName;
             const val = data[varName];
-            const ret = cond.evaluate(data);
+            const ret =await cond.evaluate(data);
             if (!ret) {
-                console.log('condition:' + varName + " " + cond.script + "vs: " + val + ' not true .. skipping');
+//                console.log('condition:' + varName + " " + cond.script + "vs: " + val + ' not true .. skipping');
                 allTrue = false;
                 result.failedCondition = c;
                 break;
             }
-            else
-                console.log('condition:' + varName + " " + cond.script+ "vs: " + val + ' true');
+//            else
+//                console.log('condition:' + varName + " " + cond.script+ "vs: " + val + ' true');
 
         }
         if (allTrue) {
@@ -65,7 +64,7 @@ export class Rule {
             for (c = 0; c < this.actions.length; c++) {
                 const action: Expression = this.actions[c];
                 const outVar = this.actionVars[c];
-                const ret = action.evaluate(data);
+                const ret = await action.evaluate(data);
                 result.output[outVar.name] = ret;
             }
             return true;
